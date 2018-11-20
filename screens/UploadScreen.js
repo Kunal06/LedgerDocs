@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { KeyboardAvoidingView, ActivityIndicator,AsyncStorage,PixelRatio, Alert, TouchableOpacity,ScrollView, StyleSheet, Text, View, Image, TextInput } from 'react-native';
+import { Switch, KeyboardAvoidingView, ActivityIndicator,AsyncStorage,PixelRatio, Alert, TouchableOpacity,ScrollView, StyleSheet, Text, View, Image, TextInput } from 'react-native';
 import { Header,Input, Button, Spinner, Card, CardSection} from '../components/common';
 import Icon from 'react-native-ionicons';
 import IOSPicker from 'react-native-ios-picker';
@@ -34,6 +34,7 @@ export default class UploadScreen extends React.Component {
       error: '',
       notes: ['a','b','c'],
       currentIndex: 0,
+      toggled: false,
     };
     // if(this.state.image){
     //   this.setState({
@@ -202,6 +203,18 @@ export default class UploadScreen extends React.Component {
       blurOnSubmit
       />
   </View>
+  </CardSection>
+  <CardSection>
+  <View style= {styles.containerStyle}>
+  <Switch
+  onValueChange={ (value) => this.setState({ toggled: value })}
+  value={ this.state.toggled }
+  thumbColor= '#000'
+  />
+    <Text style= {styles.labelstyle}>
+      Use one note for all images
+    </Text>
+    </View>
   </CardSection>
   </Card>
   <View style={styles.container,{marginBottom: 10, alignSelf: 'stretch', position: 'relative',}}>
@@ -526,6 +539,17 @@ avatarContainer: {
       position: 'absolute',
       bottom: 0
   },
+  labelstyle: {
+    paddingLeft:20,
+    fontSize:10,
+    flex:1
+  },
+  containerStyle:{
+    height: 30,
+    flex: 1,
+    flexDirection:'row',
+    alignItems: 'center'
+  }
 
 };
 //
