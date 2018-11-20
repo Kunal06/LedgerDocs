@@ -15,6 +15,7 @@ var projectKeys=[9999999];
 var tagValues=["Select Tags"];
 var tagKeys=[9999999];
 var projects=[];
+var notes = [];
 //let tags=[];
 export default class UploadScreen extends React.Component {
     state = { email: '', password: '', note: ''};
@@ -32,8 +33,7 @@ export default class UploadScreen extends React.Component {
       activeSlide: 0,
       loading: false,
       error: '',
-      notes: ['a','b','c'],
-      currentIndex: 0,
+      //notes: ['a','b','c'],
       toggled: false,
     };
     // if(this.state.image){
@@ -134,8 +134,14 @@ export default class UploadScreen extends React.Component {
                 layout= 'default'
                 onSnapToItem= {(index) =>{
                   console.log("Activeslide - "+ index);
-                  console.log("Note - "+ this.state.notes);
-                  this.setState({ activeSlide: index, note: this.state.notes[index] });
+                  console.log("Note - "+ notes);
+                  if(!this.state.toggled){
+                    notes[this.state.activeSlide] = this.state.note;
+                    this.setState({ activeSlide: index, note: notes[index] });
+                }
+                else{
+                  this.setState({ activeSlide: index });
+                }
                 }
                 }
               />
@@ -194,7 +200,7 @@ export default class UploadScreen extends React.Component {
     <TextInput
       multiline = {true}
       numberOfLines = {2}
-      value = {this.state.notes[this.state.activeSlide]}
+      value = {this.state.note}
       onChangeText={this.handleTextInput.bind(this)}
       editable = {true}
       maxLength = {60}
@@ -207,7 +213,10 @@ export default class UploadScreen extends React.Component {
   <CardSection>
   <View style= {styles.containerStyle}>
   <Switch
-  onValueChange={ (value) => this.setState({ toggled: value })}
+  onValueChange={ (value) => {
+    this.setState({ toggled: value });
+    notes[this.state.activeSlide] = this.state.note;
+  }}
   value={ this.state.toggled }
   thumbColor= '#000'
   />
@@ -231,8 +240,8 @@ export default class UploadScreen extends React.Component {
   }
   handleTextInput= note =>{
     this.setState({note});
-    this.state.notes[1] = this.state.note;
-    this.forceUpdate()
+    //this.state.notes[this.state.activeSlide] = this.state.note;
+    //this.forceUpdate()
   }
   change(d, i) {
     console.log("d val - " + d);
@@ -386,8 +395,13 @@ export default class UploadScreen extends React.Component {
     data.append("password",  this.state.password);
     data.append("ProjectId",  this.state.projectId);
     data.append("TagIds", tagString);
-    data.append("Note", this.state.note);
+
     for (var i = 0; i < this.state.images.length; i++) {
+      if(this.state.toggled){
+        data.append("Note", this.state.note);
+      } else{
+        data.append("Note", notes[i]);
+      }
       data.append('image', {
         uri: this.state.images[i].uri,
         type: 'image/jpeg', // or photo.type
