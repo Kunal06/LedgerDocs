@@ -1,0 +1,37 @@
+Dependencies
+
+react-xml-parser
+npm install react-xml-parser
+https://github.com/matanshiloah/xml-parser#readme
+
+
+React Native Document Scanner
+$ npm install react-native-document-scanner --save
+$ react-native link react-native-document-scanner
+Edit the info.plist file in XCode and add the following permission : NSCameraUsageDescription
+
+ImagePicker
+yarn add react-native-image-picker
+react-native link react-native-image-picker
+You will also need to add UsageDescription on iOS and some permissions on Android, refer to the Install doc.
+NSLocationAlwaysUsageDescription
+
+react-native-multiple-select
+npm install react-native-multiple-select --save
+
+React Navigation
+npm install --save react-navigation
+
+react-native-ionicons
+npm install react-native-ionicons
+react-native link react-native-ionicons
+
+IOSPicker
+npm i react-native-ios-picker
+
+react-native-vector-icons
+npm install react-native-vector-icons --save
+react-native link react-native-vector-icons
+
+react-native-snap-carousel
+$ npm install --save react-native-snap-carousel
