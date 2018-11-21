@@ -240,6 +240,9 @@ export default class UploadScreen extends React.Component {
   }
   handleTextInput= note =>{
     this.setState({note});
+    if(!this.state.toggled){
+      notes[this.state.activeSlide] = this.state.note;
+  }
     //this.state.notes[this.state.activeSlide] = this.state.note;
     //this.forceUpdate()
   }
@@ -400,7 +403,12 @@ export default class UploadScreen extends React.Component {
       if(this.state.toggled){
         data.append("Note", this.state.note);
       } else{
-        data.append("Note", notes[i]);
+        if(this.state.activeSlide == i){
+          data.append("Note", this.state.note);
+        } else {
+          data.append("Note", notes[i]);
+        }
+        console.log("UPLOAD IMAGE - Note - "+notes[i]);
       }
       data.append('image', {
         uri: this.state.images[i].uri,

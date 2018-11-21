@@ -1,6 +1,7 @@
 import React,{ Component } from 'react';
 import { Text, View, TouchableOpacity,Image,Dimensions, TouchableHighlight } from 'react-native';
 import DocumentScanner from 'react-native-document-scanner';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 import UploadScreen from './UploadScreen';
 export default class CameraScreen extends React.Component {
@@ -46,6 +47,13 @@ export default class CameraScreen extends React.Component {
         return "No rectangle detected yet";
     }
   }
+  _renderItem ({item, index}) {
+        return (
+          <View style={styles.slide, {flex:1, width: 200, height: 200, alignItems: 'center', borderWidth: 1, borderColor: '#000'}}>
+          <Image style={styles.avatar, {width: 200, height: 200 }} source={item} />
+      </View>
+        );
+    }
   renderCamera() {
       return (
         <View style={styles.container}>
@@ -93,6 +101,31 @@ export default class CameraScreen extends React.Component {
         </TouchableOpacity>
         <TouchableOpacity style={[styles.bottomRight]} onPress={this.completeScanning.bind(this)}>
           <Text> Done </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.bottomLeft]} onPress={this.completeScanning.bind(this)}>
+          <Text> Carousel </Text>
+          <View  style={{width: 300, marginBottom: 20, marginTop: 10, alignItems: 'center' }}>
+          <Carousel
+             ref={(c) => { this._carousel = c; }}
+             data={this.state.images}
+             renderItem={this._renderItem}
+             sliderWidth={230}
+             itemWidth={200}
+             layout= 'default'
+             onSnapToItem= {(index) =>{
+               console.log("Activeslide - "+ index);
+               console.log("Note - "+ notes);
+               if(!this.state.toggled){
+                 notes[this.state.activeSlide] = this.state.note;
+                 this.setState({ activeSlide: index, note: notes[index] });
+             }
+             else{
+               this.setState({ activeSlide: index });
+             }
+             }
+             }
+           />
+           </View>
         </TouchableOpacity>
         <Text style={styles.instructions}>
           ({this.state.stableCounter || 0} correctly formated rectangle detected
@@ -159,6 +192,17 @@ const styles ={
     borderRadius: 10,
     bottom: 45,
     right: 10,
+    height: 40,
+    width: 80,
+    backgroundColor: '#FFF'
+  },
+  bottomLeft: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    bottom: 45,
+    left: 10,
     height: 40,
     width: 80,
     backgroundColor: '#FFF'
