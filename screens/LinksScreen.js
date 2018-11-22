@@ -122,7 +122,7 @@ state = {
            <Text style={styles.textStyle}> Scan Multiple Documents </Text>
        </TouchableOpacity>
        </View>
-       <View style= {{marginBottom:70}}>
+       <View style= {{top:0, bottom:0, marginBottom:70}}>
         <Text> or </Text>
        </View>
        <View style={styles.buttonStyle} >

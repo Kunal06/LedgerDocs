@@ -68,7 +68,7 @@ SettingsStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options'}
+      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : ''}` : 'md-options'}
     />
   ),
 };
@@ -77,4 +77,8 @@ export default createBottomTabNavigator({
   HomeStack,
   LinksStack,
   SettingsStack,
-});
+},
+{
+  initialRouteName: 'LinksStack',
+}
+);

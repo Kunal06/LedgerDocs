@@ -2,6 +2,7 @@ import React,{ Component } from 'react';
 import { Text, View, TouchableOpacity,Image,Dimensions, TouchableHighlight } from 'react-native';
 import DocumentScanner from 'react-native-document-scanner';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+import MultipleImagePicker from 'react-native-image-crop-picker';
 
 import UploadScreen from './UploadScreen';
 export default class CameraScreen extends React.Component {
@@ -55,6 +56,30 @@ export default class CameraScreen extends React.Component {
       </View>
         );
     }
+    pickMultiple() {
+       MultipleImagePicker.openPicker({
+         cropping: true,
+         includeBase64: true,
+         multiple: true,
+         waitAnimationEnd: false,
+         forceJpg: true,
+         smartAlbums: ['RecentlyAdded','Screenshots',],
+         showsSelectedCount: true
+
+       }).then(images => {
+         console.log("multiple images - " + images.length);
+         for (var i = 0; i < images.length; i++) {
+           let source = { uri: 'data:image/jpeg;base64,' + images[i].data };
+           console.log("CDU - " + source.uri);
+           images[i]=source;
+         }
+         this.setState({
+           image: null,
+           images: images,
+         },
+       );
+       }).catch(e => alert(e));
+     }
   renderCamera() {
       return (
         <View style={styles.container}>
@@ -104,7 +129,10 @@ export default class CameraScreen extends React.Component {
           <Text> Done </Text>
         </TouchableOpacity>
         <View style={[styles.bottomLeft]} >
-          <Text> Carousel </Text>
+        {   this.state.images.length == 0 ?
+          <TouchableOpacity style={styles.textStyle} onPress={this.pickMultiple.bind(this)}>
+          <Text> Select Images from Library </Text>
+          </TouchableOpacity>:
           <View  style={{height: 100, alignItems: 'center' }}>
           <Carousel
              ref={(c) => { this._carousel = c; }}
@@ -121,6 +149,9 @@ export default class CameraScreen extends React.Component {
              }
            />
            </View>
+        }
+
+
         </View>
         <Text style={styles.instructions}>
           ({this.state.stableCounter || 0} correctly formated rectangle detected
@@ -224,5 +255,14 @@ const styles ={
     height: 200,
     borderColor: 'orange',
     borderWidth: 1
-  }
+  },
+  textStyle: {
+    alignSelf:'center',
+    color:'#007aff',
+    fontSize:16,
+    fontWeight: '600',
+    paddingTop:10,
+    paddingBottom:10
+
+  },
 }
