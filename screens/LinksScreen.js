@@ -102,21 +102,6 @@ state = {
          image: null,
          images: images,
        });
-   //     this.setState({
-   //       image: null,
-   //       images: [...this.state.images, images[0],images[1]]
-   //       images: images.map(i => {
-   //         let source = { uri: 'data:image/jpeg;base64,' + i.data };
-   //         console.log("imageCropPicker image - "+ source.uri);
-   //         this.setState({
-   //           imageSource: source,
-   //           images: [...this.state.images, source]
-   //         });
-   //         return {uri: i.path, width: i.width, height: i.height, mime: i.mime};
-   //       })
-   //     },
-   //   console.log("multiple state images - " + this.state.images.length)
-   // );
      }).catch(e => alert(e));
    }
   render() {

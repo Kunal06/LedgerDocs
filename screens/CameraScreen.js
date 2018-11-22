@@ -19,6 +19,7 @@ export default class CameraScreen extends React.Component {
       useFrontCam: false,
       uploadReady: null,
       images:[],
+      activeSlide: 0
     };
   }
   componentDidUpdate(previmage){
@@ -78,13 +79,13 @@ export default class CameraScreen extends React.Component {
           overlayColor="rgba(255,130,0, 0.7)"
           enableTorch={this.state.flashEnabled}
           useFrontCam={this.state.useFrontCam}
-          brightness={0.2}
+          brightness={0.1}
           saturation={0}
-          quality={0.2}
+          quality={0.8}
           contrast={1.2}
           onRectangleDetect={({ stableCounter, lastDetectionType }) => this.setState({ stableCounter, lastDetectionType })}
           detectionCountBeforeCapture={5}
-          detectionRefreshRateInMS={50}
+          detectionRefreshRateInMS={100}
           captureMultiple= {true}
           style={styles.scanner}
         />
@@ -102,31 +103,25 @@ export default class CameraScreen extends React.Component {
         <TouchableOpacity style={[styles.bottomRight]} onPress={this.completeScanning.bind(this)}>
           <Text> Done </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.bottomLeft]} onPress={this.completeScanning.bind(this)}>
+        <View style={[styles.bottomLeft]} >
           <Text> Carousel </Text>
-          <View  style={{width: 300, marginBottom: 20, marginTop: 10, alignItems: 'center' }}>
+          <View  style={{height: 100, alignItems: 'center' }}>
           <Carousel
              ref={(c) => { this._carousel = c; }}
              data={this.state.images}
              renderItem={this._renderItem}
-             sliderWidth={230}
-             itemWidth={200}
+             sliderWidth={130}
+             itemWidth={100}
              layout= 'default'
              onSnapToItem= {(index) =>{
                console.log("Activeslide - "+ index);
-               console.log("Note - "+ notes);
-               if(!this.state.toggled){
-                 notes[this.state.activeSlide] = this.state.note;
-                 this.setState({ activeSlide: index, note: notes[index] });
-             }
-             else{
+
                this.setState({ activeSlide: index });
-             }
              }
              }
            />
            </View>
-        </TouchableOpacity>
+        </View>
         <Text style={styles.instructions}>
           ({this.state.stableCounter || 0} correctly formated rectangle detected
         </Text>
@@ -201,11 +196,10 @@ const styles ={
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
-    bottom: 45,
-    left: 10,
-    height: 40,
-    width: 80,
-    backgroundColor: '#FFF'
+    bottom: 65,
+    left: 20,
+    height: 100,
+    width: 100,
   },
   left: {
     left: 20,

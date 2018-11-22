@@ -483,6 +483,7 @@ export default class UploadScreen extends React.Component {
     tagValues=[];
     tagKeys=[];
     projects=[];
+    notes=[];
   }
 }
 
