@@ -48,7 +48,7 @@ state = {
         skipBackup: true
       }
     };
-    ImagePicker.showImagePicker(options, (response) => {
+    ImagePicker.launchCamera(options, (response) => {
       console.log('Response = ', response);
 
       if (response.didCancel) {
@@ -109,23 +109,27 @@ state = {
       <View style={styles.container}>
         {/* Go ahead and delete ExpoLinksView and replace it with your
            * content, we just wanted to provide you with some helpful links */}
-           <TouchableOpacity style={styles.content} onPress={() => this.props.navigation.navigate('Camera',{Image: this.state.imageSource})}>
+           <View>
+           <TouchableOpacity style={styles.content} onPress={this.selectPhotoTapped.bind(this)} >
              <Icon name="md-camera" size={300} color="black" />
            </TouchableOpacity>
+           </View>
            <View style= {{top:0, bottom:0, marginBottom:70}}>
             <Text> or </Text>
            </View>
-
-           <TouchableOpacity style={{height: 100,marginBottom: 20, alignItems:'stretch',}, styles.buttonStyle} onPress={this.selectPhotoTapped.bind(this)}>
-         { this.state.imageSource === null ?
-           <Text style={styles.textStyle}> Select a Photo </Text>:
-           <Text style={styles.textStyle}> Select a Photo </Text>
-         //this.props.navigation.navigate('Upload',{Image: this.state.imageSource})
-         }
+           <View style={styles.buttonStyle} >
+           <TouchableOpacity style={{ alignItems:'stretch',}} onPress={() => this.props.navigation.navigate('Camera',{Image: this.state.imageSource})}>
+           <Text style={styles.textStyle}> Scan Multiple Documents </Text>
        </TouchableOpacity>
-       <TouchableOpacity style={styles.buttonStyle} onPress={this.pickMultiple.bind(this)}>
-           <Text style={styles.textStyle}>Select Multiple</Text>
+       </View>
+       <View style= {{marginBottom:70}}>
+        <Text> or </Text>
+       </View>
+       <View style={styles.buttonStyle} >
+       <TouchableOpacity onPress={this.pickMultiple.bind(this)}>
+           <Text style={styles.textStyle}>Select Multiple Images</Text>
        </TouchableOpacity>
+       </View>
       </View>
     );
   }

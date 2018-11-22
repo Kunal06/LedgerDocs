@@ -132,6 +132,7 @@ export default class UploadScreen extends React.Component {
                 sliderWidth={230}
                 itemWidth={200}
                 layout= 'default'
+                removeClippedSubviews={false}
                 onSnapToItem= {(index) =>{
                   console.log("Activeslide - "+ index);
                   console.log("Note - "+ notes);

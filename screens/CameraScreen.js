@@ -141,6 +141,7 @@ export default class CameraScreen extends React.Component {
   }
   takePicture() {
     this.scan.capture();
+    this.setState({stableCounter:0});
   }
   completeScanning(){
     console.log("length of images array - "+ this.state.images.length);
