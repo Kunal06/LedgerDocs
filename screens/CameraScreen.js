@@ -49,6 +49,7 @@ export default class CameraScreen extends React.Component {
         return "No rectangle detected yet";
     }
   }
+  //Carousel Functions
   _renderItem ({item, index}) {
         return (
           <View style={styles.slide, {flex:1, width: 200, height: 200, alignItems: 'center', borderWidth: 1, borderColor: '#000'}}>
@@ -56,6 +57,29 @@ export default class CameraScreen extends React.Component {
       </View>
         );
     }
+    get pagination () {
+        const { images, activeSlide } = this.state;
+        return (
+            <Pagination
+              dotsLength={images.length}
+              activeDotIndex={activeSlide}
+              containerStyle={{ backgroundColor: 'rgba(255, 0, 100, 0)', marginLeft: 20}}
+              dotStyle={{
+                  width: 4,
+                  height: 5,
+                  borderRadius: 5,
+                  marginHorizontal: 1,
+                  backgroundColor: 'rgba(255, 0, 0, 0.92)'
+              }}
+              inactiveDotStyle={{
+                  // Define styles for inactive dots here
+              }}
+              inactiveDotOpacity={0.5}
+              inactiveDotScale={0.9}
+            />
+        );
+    }
+    //Carousel Functions end
     pickMultiple() {
        MultipleImagePicker.openPicker({
          cropping: true,
@@ -130,16 +154,17 @@ export default class CameraScreen extends React.Component {
         </TouchableOpacity>
         <View style={[styles.bottomLeft]} >
         {   this.state.images.length == 0 ?
-          <TouchableOpacity style={styles.textStyle} onPress={this.pickMultiple.bind(this)}>
+          <TouchableOpacity style={styles.selectImages} onPress={this.pickMultiple.bind(this)}>
           <Text> Select Images from Library </Text>
           </TouchableOpacity>:
-          <View  style={{height: 100, alignItems: 'center' }}>
+          <View  style={{height: 180, alignItems: 'center', marginBottom:-40 }}>
+
           <Carousel
              ref={(c) => { this._carousel = c; }}
              data={this.state.images}
              renderItem={this._renderItem}
-             sliderWidth={130}
-             itemWidth={100}
+             sliderWidth={120}
+             itemWidth={80}
              layout= 'default'
              onSnapToItem= {(index) =>{
                console.log("Activeslide - "+ index);
@@ -148,9 +173,9 @@ export default class CameraScreen extends React.Component {
              }
              }
            />
+           { this.pagination }
            </View>
         }
-
 
         </View>
         <Text style={styles.instructions}>
@@ -228,7 +253,7 @@ const styles ={
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
-    bottom: 65,
+    bottom: 45,
     left: 20,
     height: 100,
     width: 100,
@@ -263,6 +288,22 @@ const styles ={
     fontWeight: '600',
     paddingTop:10,
     paddingBottom:10
+
+  },
+  selectImages: {
+    alignSelf:'center',
+    textAlign: 'center',
+    justifyContent: 'center',
+    color:'#007aff',
+    fontSize:16,
+    fontWeight: '600',
+    height : 100,
+    width : 100,
+    borderRadius:5,
+    borderWidth:1,
+    borderColor:'#007aff',
+    backgroundColor: '#FFF'
+
 
   },
 }

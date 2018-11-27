@@ -261,7 +261,7 @@ console.log("Selected Value - " + this.state.selectedValue);
           updates: [...this.state.updates, keyvalitem]
         });
       }
-     //console.log(JSON.stringify(this.state.updates));
+     console.log(JSON.stringify(this.state.updates));
     }).catch((error) => {
       console.error(error);
     });
