@@ -29,14 +29,12 @@ export default class CameraScreen extends React.Component {
         console.log("Enter UploadScreen - - - " + this.state.image);
         if(this.state.uploadReady){
           this.setState({ uploadReady: null })
-          //console.log(" Before UploadScreen Update UploadReady " + this.state.uploadReady);
           let imageTaken= [];
           imageTaken.push(this.state.image);
-          //this.props.navigation.navigate('Upload',{Image:this.state.image, Images: imageTaken})
       }
     }
   }
-
+//Document Scanner Functions
   renderDetectionType() {
     switch (this.state.lastDetectionType) {
       case 0:
@@ -49,11 +47,16 @@ export default class CameraScreen extends React.Component {
         return "No rectangle detected yet";
     }
   }
+  takePicture() {
+    this.scan.capture();
+    this.setState({stableCounter:0});
+  }
+  //Document Scanner Functions END
   //Carousel Functions
   _renderItem ({item, index}) {
         return (
           <View style={styles.slide, {flex:1, width: 200, height: 200, alignItems: 'center', borderWidth: 1, borderColor: '#000'}}>
-          <Image style={styles.avatar, {width: 200, height: 200 }} source={item} />
+          <Image style={{width: 200, height: 200 }} source={item} />
       </View>
         );
     }
@@ -195,10 +198,6 @@ export default class CameraScreen extends React.Component {
       </View>
     );
   }
-  takePicture() {
-    this.scan.capture();
-    this.setState({stableCounter:0});
-  }
   completeScanning(){
     console.log("length of images array - "+ this.state.images.length);
     this.props.navigation.navigate('Upload',{Image:this.state.image, Images: this.state.images})
@@ -210,11 +209,6 @@ const styles ={
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-  },
-  newPic: {
-    height: 100,
-    alignItems: 'center',
-    justifyContent: 'center'
   },
   button: {
     position: 'absolute',
@@ -264,11 +258,6 @@ const styles ={
   right: {
     right: 20,
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
   instructions: {
     textAlign: 'center',
     color: '#333333',
@@ -280,15 +269,6 @@ const styles ={
     height: 200,
     borderColor: 'orange',
     borderWidth: 1
-  },
-  textStyle: {
-    alignSelf:'center',
-    color:'#007aff',
-    fontSize:16,
-    fontWeight: '600',
-    paddingTop:10,
-    paddingBottom:10
-
   },
   selectImages: {
     alignSelf:'center',
@@ -303,7 +283,6 @@ const styles ={
     borderWidth:1,
     borderColor:'#007aff',
     backgroundColor: '#FFF'
-
 
   },
 }

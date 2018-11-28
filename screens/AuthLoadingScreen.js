@@ -17,26 +17,17 @@ export default class AuthLoadingScreen extends React.Component {
 
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
-
-  //   let user = {
-  //   LoggedIn: 'false',
-  //   user_name:  '',
-  //   password:  ''
-  // }
-  //   await AsyncStorage.setItem('User', JSON.stringify(user));
     const userToken = JSON.parse (await AsyncStorage.getItem('User'));
     console.log("userToken - "+ userToken);
     if (userToken == null){
       this.props.navigation.navigate('Auth');
     }
-    console.log(userToken.LoggedIn == "true" ? "Main" : "Auth");
+    //console.log(userToken.LoggedIn == "true" ? "Main" : "Auth");
 
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
     this.props.navigation.navigate(userToken.LoggedIn == "true" ? 'Main' : 'Auth');
   };
-
-  // Render any loading content that you like here
   render() {
     return (
       <View style={styles.container}>

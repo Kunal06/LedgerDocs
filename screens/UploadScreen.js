@@ -160,7 +160,7 @@ export default class UploadScreen extends React.Component {
              onValueChange={(d, i)=> this.change(d, i)} />
              </View>
              <CardSection style={{ maxHeight:530 }}>
-           <View style={{ flex: 1,width: 300, maxHeight:530 }}>
+           <View style={styles.multi}>
              <MultiSelect
                items={this.state.tags}
                uniqueKey="id"
@@ -495,34 +495,10 @@ const styles = {
     flexDirection: 'column',
      alignItems: 'center',
      justifyContent: 'space-between',
-    // justifyContent: 'center',
-  },
-  heading: {
-    flex: 2,
-    fontSize: 20,
-  },
-  dropdown: {
-    height: 15,
-    width: 250,
-    fontSize: 15,
-  },
-  submitButton: {
-    flex: 3,
-    height: 5,
-    flexDirection: 'row',
-    justifyContent:'flex-end',
-    bottom: 0,
-},
-avatarContainer: {
-    borderColor: '#9B9B9B',
-    borderWidth: 1 / PixelRatio.get(),
-    justifyContent: 'center',
-    alignItems: 'center'
   },
   avatar: {
-    borderRadius: 30,
-    width: 250,
-    height: 250
+    width: 200,
+    height: 200
   },
   pickerStyle:  {
     borderBottomWidth: 1,
@@ -537,6 +513,7 @@ avatarContainer: {
     flex: 1,
     backgroundColor: '#F5FCFF',
     padding: 10,
+    flex: 1,width: 300, maxHeight:530,
   },
   buttonStyle: {
     alignSelf: 'stretch',
@@ -576,6 +553,3 @@ avatarContainer: {
   }
 
 };
-//
-// <ModalDropdown dropdownStyle={{width: 200, height:40}} options={projectKeys}/>
-// <ModalDropdown dropdownStyle={{width: 200, height:40}} options={projectValues}/>

@@ -107,9 +107,7 @@ state = {
   render() {
     return (
       <View style={styles.container}>
-        {/* Go ahead and delete ExpoLinksView and replace it with your
-           * content, we just wanted to provide you with some helpful links */}
-           <View>
+        <View>
            <TouchableOpacity style={styles.content} onPress={this.selectPhotoTapped.bind(this)} >
              <Icon name="md-camera" size={300} color="black" />
            </TouchableOpacity>
@@ -145,44 +143,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     // justifyContent: 'center',
   },
-  heading: {
-    //flex: 2,
-    fontSize: 20,
-  },
   content: {
-    //flex: 8,
     fontSize: 20,
-  },
-  vi: {
-  //  height: 15,
-  },
-  submitButton: {
-    //flex: 3,
-    height: 5,
-    flexDirection: 'row',
-    justifyContent:'flex-end',
-    bottom: 0,
-},
-buttonImagePicker: {
-  width: 250,
-  height: 50,
-  backgroundColor: '#330066',
-},
-image: {
-  width:200,
-  height:200,
-  marginTop: 30,
-},
-avatarContainer: {
-    borderColor: '#9B9B9B',
-    borderWidth: 1 / PixelRatio.get(),
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  avatar: {
-    borderRadius: 30,
-    width: 250,
-    height: 250
   },
   textStyle: {
     alignSelf:'center',

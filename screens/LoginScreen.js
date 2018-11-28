@@ -1,3 +1,5 @@
+// Login Screen - login to application through ledgerdocs login. Fetch call made
+// to server with username and password as parameters.
 import React, {Component} from 'react';
 import {View, Text,AsyncStorage,TouchableOpacity} from 'react-native';
 import {Button,Card, CardSection,Input, Spinner,Header} from '../components/common';
@@ -34,14 +36,14 @@ authenticate(){
     },
     body: data
   }).then((response) => response.text())
-  .then((responseJson) => {
-    // Showing response message coming from server after inserting records.
-    console.log(responseJson);
-    var xml = new XMLParser().parseFromString(responseJson);    // Assume xmlText contains the example XML
-    console.log(xml);
-    console.log(xml.getElementsByTagName('String')[0].value);
+  .then((responseXML) => {
+    // Showing response message coming from server.
+    //console.log(responseXML);
+    var xml = new XMLParser().parseFromString(responseXML);    // Assume xmlText contains the example XML
+    //console.log(xml);
+    //console.log(xml.getElementsByTagName('String')[0].value);
     if(xml.getElementsByTagName('String')[0].value == "success"){
-      console.log("BEGIN LOGIN");
+      //console.log("BEGIN LOGIN");
       this.onLoginSuccess();
     }
     else{
@@ -68,9 +70,9 @@ onButtonPress(){
 }
 
 _signInAsync = async () => {
-  console.log(" SIGN IN SUCCESFUL");
-  console.log("USERNAME - " + this.state.email);
-  console.log("Password - " + this.state.password);
+  //console.log(" SIGN IN SUCCESFUL");
+  // console.log("USERNAME - " + this.state.email);
+  // console.log("Password - " + this.state.password);
   this.setState({
     loggedIn: 'true',
   },
@@ -88,9 +90,9 @@ let user = {
    // const userToken = await AsyncStorage.getItem('LoggedIn');
    // const username = await AsyncStorage.getItem('username');
   const currentUser = JSON.parse (await AsyncStorage.getItem('User'));
-   console.log(currentUser.loggedIn);
-   console.log(currentUser.user_name);
-   console.log(currentUser.password);
+   // console.log(currentUser.loggedIn);
+   // console.log(currentUser.user_name);
+   // console.log(currentUser.password);
    this.props.navigation.navigate('AuthLoading');
  };
 onLoginFail(){
