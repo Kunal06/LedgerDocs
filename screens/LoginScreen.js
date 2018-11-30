@@ -1,7 +1,7 @@
 // Login Screen - login to application through ledgerdocs login. Fetch call made
 // to server with username and password as parameters.
 import React, {Component} from 'react';
-import {View, Text,AsyncStorage,TouchableOpacity} from 'react-native';
+import {View, Text,AsyncStorage,TouchableOpacity, Image} from 'react-native';
 import {Button,Card, CardSection,Input, Spinner,Header} from '../components/common';
 
 var XMLParser = require('react-xml-parser');
@@ -124,6 +124,12 @@ renderButton(){
   render() {
     return (
       <View style={{backgroundColor:'#fff', flex:1,}}>
+      <Card>
+      <Image
+        style= {{alignSelf: 'center'}}
+        source={require('../assets/images/icon.png')}
+      />
+      </Card>
       <Card>
         <CardSection>
           <Input

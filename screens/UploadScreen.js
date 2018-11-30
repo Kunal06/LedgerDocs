@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, KeyboardAvoidingView, ActivityIndicator,AsyncStorage,PixelRatio, Alert, TouchableOpacity,ScrollView, StyleSheet, Text, View, Image, TextInput } from 'react-native';
+import {Picker, Switch, KeyboardAvoidingView, ActivityIndicator,AsyncStorage,PixelRatio, Alert, TouchableOpacity,ScrollView, StyleSheet, Text, View, Image, TextInput, PickerItemIOS } from 'react-native';
 import { Header,Input, Button, Spinner, Card, CardSection} from '../components/common';
 import Icon from 'react-native-ionicons';
 import IOSPicker from 'react-native-ios-picker';
@@ -10,12 +10,14 @@ const serverURL = "https://migration.ledgersonline.com/index.php/Iphone/";
 import FormData from 'FormData';
 var XMLParser = require('react-xml-parser');
 import LinksScreen from './LinksScreen';
-var projectValues=["Select Project"];
+var projectValues=["Select Projects"];
 var projectKeys=[9999999];
 var tagValues=["Select Tags"];
 var tagKeys=[9999999];
 var projects=[];
 var notes = [];
+const data = [{name: 'SanPyaeLin', code: '22'},{name: 'Jhon', code: '1'},{name: 'Marry', code: '2'}]
+
 //let tags=[];
 export default class UploadScreen extends React.Component {
     state = { email: '', password: '', note: ''};
@@ -28,7 +30,7 @@ export default class UploadScreen extends React.Component {
       images : this.props.navigation.state.params.Images,
       selectedItems : [],
       projectId: '',
-      selectedValue: 'SELECT PROJECTS',
+      selectedValue: '',
       tags:[],
       activeSlide: 0,
       loading: false,
@@ -156,8 +158,13 @@ export default class UploadScreen extends React.Component {
              borderColor:'#007aff'}}
              selectedValue={this.state.selectedValue}
              mode='modal'
-             data={projectValues}
-             onValueChange={(d, i)=> this.change(d, i)} />
+             onValueChange={(d, i)=> this.change(d, i)}>
+             {
+                projects.map((item, index)=>
+                  <Picker.Item key={index} label={item.val} value={item.val} />
+                )
+              }
+              </IOSPicker>
              </View>
              <CardSection style={{ maxHeight:530 }}>
            <View style={styles.multi}>
@@ -294,6 +301,29 @@ export default class UploadScreen extends React.Component {
      //console.log(xml.getElementsByTagName('key'));
      let projectsObjKey= xml.getElementsByTagName('key');
       let projectsObj= xml.getElementsByTagName('String');
+
+      if(projectsObj.length == 5){
+        projectKeys=[];
+        projectKeys.push(projectsObjKey[4].value);
+        projectValues=[];
+        projectValues.push(projectsObj[4].value);
+        this.setState({
+          selectedValue:projectsObj[4].value,
+          projectId: projectKeys[0],
+        },
+      this.loadTags()
+    );
+        console.log(this.state.selectedValue);
+      }
+      else{
+        this.setState({
+          selectedValue:"Select Projects",
+        });
+        let keyvalitem = {
+          id: '9999999',
+          val: "Select Projects",
+        }
+        projects.push(keyvalitem);
       for(let i = 4; i < projectsObj.length ; i++ ){
         projectKeys.push(projectsObjKey[i].value);
         projectValues.push(projectsObj[i].value);
@@ -308,7 +338,8 @@ export default class UploadScreen extends React.Component {
 
       // console.log(projects);
       // console.log(items);
-      console.log(projectValues);
+    }
+      console.log(projectKeys);
       this.setState({
         selectedItems:[],
       });
@@ -323,15 +354,19 @@ export default class UploadScreen extends React.Component {
   }
   loadTags(){
     // console.log("ENTERED LOAD TAGS");
-    // console.log("project ID- " + this.state.projectId);
+    console.log("project ID- " + this.state.projectId);
     // console.log("Selected Value - " + this.state.selectedValue);
 
     const data = new FormData();
     data.append("user_name",  this.state.email);
     data.append("password",  this.state.password);
-    console.log(this.state.projectId);
-    //console.log(this.state.password);
-    fetch(serverURL+'getTags/'+ this.state.projectId, {
+    console.log(projectKeys[0]);
+    let projID = this.state.projectId;
+    if (projectKeys.length ==1){
+      projID= projectKeys[0];
+    }
+
+    fetch(serverURL+'getTags/'+ projID, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -397,7 +432,12 @@ export default class UploadScreen extends React.Component {
     const data = new FormData();
     data.append("user_name",  this.state.email);
     data.append("password",  this.state.password);
-    data.append("ProjectId",  this.state.projectId);
+    if(projectKeys.length == 1){
+      data.append("ProjectId",  projectKeys[0]);
+    }
+    else {
+      data.append("ProjectId",  this.state.projectId);
+    }
     data.append("TagIds", tagString);
 
     for (var i = 0; i < this.state.images.length; i++) {
@@ -479,8 +519,8 @@ export default class UploadScreen extends React.Component {
       loading: false,
       error: ''
     });
-    projectValues=[];
-    projectKeys=[];
+    projectValues=["Select Projects"];
+    projectKeys=[999999];
     tagValues=[];
     tagKeys=[];
     projects=[];

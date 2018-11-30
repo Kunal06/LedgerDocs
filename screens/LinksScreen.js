@@ -80,7 +80,7 @@ state = {
       let imagesUri=[];
       for (var i = 0; i < this.state.images.length; i++) {
         let source = { uri: 'data:image/jpeg;base64,' + this.state.images[i].data };
-        console.log("CDU - " + source.uri);
+        //console.log("CDU - " + source.uri);
         imagesUri.push(source);
       }
       this.props.navigation.navigate('Upload',{Image: this.state.imageSource, Images: imagesUri})
