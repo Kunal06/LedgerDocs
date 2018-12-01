@@ -29,7 +29,8 @@ export default class SettingsScreen extends React.Component {
     let user = {
     LoggedIn: 'false',
     user_name: currentUser.user_name,
-    password:  currentUser.password
+    password:  currentUser.password,
+    remember:  currentUser.remember
   }
   await AsyncStorage.setItem('User', JSON.stringify(user));
     this.props.navigation.navigate('AuthLoading');

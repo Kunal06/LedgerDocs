@@ -5,3 +5,4 @@ export * from './Card';
 export * from './Input';
 export * from './Spinner';
 export * from './Futch';
+export * from './InputVertical';

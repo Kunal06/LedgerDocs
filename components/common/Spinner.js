@@ -15,7 +15,8 @@ const styles = {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'relative'
+    position: 'relative',
+    height: 80,
   }
 };
 

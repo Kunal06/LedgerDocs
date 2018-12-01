@@ -39,7 +39,7 @@ const styles = {
   container:
     {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor:'#DDECF9'
     },
   MainContainer:
     {
