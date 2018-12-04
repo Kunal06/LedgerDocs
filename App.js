@@ -9,6 +9,7 @@
 import React, {Component} from 'react';
 import { Platform, StatusBar, StyleSheet, View, Text, ScrollView, SafeAreaView } from 'react-native';
 import AppNavigator from './navigation/AppNavigator';
+import SplashScreen from 'react-native-splash-screen'
 
 import {Header, Button, Spinner,Card, CardSection,Input} from './components/common';
 
@@ -23,6 +24,10 @@ const userData = {
 }
 export default class App extends React.Component {
 
+  componentDidMount(){
+    SplashScreen.hide();
+  }
+  
 render(){
   return (
     <SafeAreaView style={styles.container}>

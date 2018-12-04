@@ -36,7 +36,15 @@ react-native link react-native-vector-icons
 react-native-snap-carousel
 $ npm install --save react-native-snap-carousel
 
+react-native-splash-screen
+npm i react-native-splash-screen --save
+react-native link react-native-splash-screen
+https://github.com/crazycodeboy/react-native-splash-screen
+
 React Native Push Notifications
 npm install --save react-native-push-notification
 react-native link react-native-push-notification
 
+Pubnub
+npm install --save pubnub pubnub-react
+react-native link
