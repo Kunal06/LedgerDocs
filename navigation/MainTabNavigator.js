@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, Image } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import {Header, Button, Spinner, Card, CardSection} from '../components/common';
 
@@ -18,14 +18,15 @@ const HomeStack = createStackNavigator({
 HomeStack.navigationOptions = {
   tabBarLabel: 'Home',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }
-    />
+    focused ? <Image
+          source={require('../assets/images/Camera_icons/bell-notification.png')}
+          style={{height: '80%', width: '18%'}}
+        />
+        :
+        <Image
+          source={require('../assets/images/Camera_icons/bell-notification.png')}
+          style={{height: '80%', width: '18%'}}
+        />
   ),
 };
 
@@ -41,13 +42,15 @@ const LinksStack = createStackNavigator({
 LinksStack.navigationOptions = ({ navigation }) => {
   let { routeName } = navigation.state.routes[navigation.state.index];
   let navigationOptions = {tabBarLabel: 'Camera', tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }    />
+    focused ? <Image
+          source={require('../assets/images/Camera_icons/camera.png')}
+          style={{height: '70%', width: '20%'}}
+        />
+        :
+        <Image
+          source={require('../assets/images/Camera_icons/camera.png')}
+          style={{height: '70%', width: '20%'}}
+        />
   ),};
 
   if (routeName === 'Camera') {
@@ -66,10 +69,15 @@ const SettingsStack = createStackNavigator({
 SettingsStack.navigationOptions = {
   tabBarLabel: 'Settings',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : ''}` : 'md-options'}
-    />
+    focused ? <Image
+          source={require('../assets/images/Camera_icons/setting-icon.png')}
+          style={{height: '70%', width: '20%'}}
+        />
+        :
+        <Image
+          source={require('../assets/images/Camera_icons/setting-icon.png')}
+          style={{height: '70%', width: '20%'}}
+        />
   ),
 };
 
@@ -80,5 +88,6 @@ export default createBottomTabNavigator({
 },
 {
   initialRouteName: 'LinksStack',
+  tabBarOptions: {style: {backgroundColor: '#365C80', }},
 }
 );

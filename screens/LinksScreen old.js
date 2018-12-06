@@ -32,7 +32,7 @@ export default class LinksScreen extends React.Component {
     console.log(userToken);
 }
   static navigationOptions = {
-    header: null,
+    header: <Header headText="Take Picture"> </Header>,
   };
 state = {
     imageSource: null,
@@ -107,38 +107,30 @@ state = {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.hb_container}>
-          <View style={styles.hb_center}>
-            <Text style={{ fontSize: 23, color: '#fff' }}> Take Picture </Text>
-          </View>
-          <TouchableOpacity style={styles.hb_left} onPress= {() => this.clear()}>
-          <Icon name="arrow-round-back" style={{fontSize: 50, color: "#fff"}}></Icon>
-          </TouchableOpacity>
-        </View>
-
-        <TouchableOpacity style={styles.si_container}>
-        <Image source={require('../assets/images/Camera_icons/cam.png')} style= {{position: 'absolute',
-        top: '20%',width: 110, height: '50%'}} />
-        <View style={styles.si_text_container}>
-        <Text style= {{fontSize: 23, color: '#365C80'}}> Take Single Photo </Text>
-        </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.cs_container}>
-        <Image source={require('../assets/images/Camera_icons/camera-borders.png')} style= {{position: 'absolute',
-        top: '10%',width: '25%', height: '70%'}} />
-        <View style={styles.cs_text_container}>
-        <Text style= {{fontSize: 23, color: '#365C80'}}> Scan Documents </Text>
-        </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.c_container}>
-        <Image source={require('../assets/images/Camera_icons/select_images.png')} style= {{position: 'absolute',
-        top: '10%',width: '25%', height: '50%'}} />
-        <View style={styles.c_text_container}>
-        <Text style= {{fontSize: 23, color: '#365C80'}}> Select Images </Text>
-        </View>
-        </TouchableOpacity>
+        <View>
+           <TouchableOpacity style={styles.content} onPress={this.selectPhotoTapped.bind(this)} >
+             <Image source={require('../assets/images/Camera_icons/cam.png')}  />
+             <Text> Take Single Photo </Text>
+           </TouchableOpacity>
+           </View>
+           <View style= {{top:0, bottom:0, marginBottom:70}}>
+            <Text> or </Text>
+           </View>
+           <View style={styles.buttonStyle} >
+           <TouchableOpacity style={{ alignItems:'center',}} onPress={() => this.props.navigation.navigate('Camera',{Image: this.state.imageSource})}>
+           <Image source={require('../assets/images/Camera_icons/camera-borders.png')}  />
+           </TouchableOpacity>
+           <Text style={styles.textStyle}> Scan Multiple Documents </Text>
+       </View>
+       <View style= {{top:0, bottom:0, marginBottom:70}}>
+        <Text> or </Text>
+       </View>
+       <View style={styles.buttonStyle} >
+       <TouchableOpacity onPress={this.pickMultiple.bind(this)}>
+       <Image source={require('../assets/images/Camera_icons/select_images.png')}  />
+           <Text style={styles.textStyle}>Select Multiple Images</Text>
+       </TouchableOpacity>
+       </View>
       </View>
     );
   }
@@ -148,69 +140,30 @@ state = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
+    alignItems:'center',
+    justifyContent: 'space-around',
     flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'stretch',
-    backgroundColor: '#fff',
+    // justifyContent: 'center',
   },
-  //HeaderBanner = hb
-  hb_container: {
-    height: '8%',
-    backgroundColor: '#365C80',
+  content: {
+    fontSize: 20,
   },
-  hb_left: {
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
-    top: 0,
-    bottom: 0,
-    left: '5%',
-  },
-  hb_center: {
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-  },
-  //Single Image = hb
-  si_container: {
-     height: '30%',
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  si_text_container: {
-    height: '20%',
-    position: 'absolute',
-    bottom: '5%'
+  textStyle: {
+    alignSelf:'center',
+    color:'#007aff',
+    fontSize:16,
+    fontWeight: '600',
+    paddingTop:10,
+    paddingBottom:10
 
   },
-  //Camera Settings = cs
-  cs_container: {
-    height: '20%',
+  buttonStyle: {
+    alignSelf: 'stretch',
+    bottom:60,
     backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  cs_text_container: {
-    height: '18%',
-    position: 'absolute',
-    bottom: '0%'
+    borderRadius:5,
 
-  },
-  // Camera = c
-  c_container: {
-    height: '30%',
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  c_text_container: {
-    height: '20%',
-    position: 'absolute',
-    bottom: '5%'
   }
+
 });
