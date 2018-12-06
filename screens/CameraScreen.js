@@ -3,6 +3,9 @@ import { Text, View, TouchableOpacity,Image,Dimensions, TouchableHighlight } fro
 import DocumentScanner from 'react-native-document-scanner';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import MultipleImagePicker from 'react-native-image-crop-picker';
+import { Header,Input, Button, Spinner, Card, CardSection} from '../components/common';
+import Icon from 'react-native-ionicons';
+
 
 import UploadScreen from './UploadScreen';
 export default class CameraScreen extends React.Component {
@@ -16,47 +19,85 @@ export default class CameraScreen extends React.Component {
     super(props);
     this.state = {
       image: null,
+      imageTaken:false,
       flashEnabled: false,
       useFrontCam: false,
       uploadReady: null,
       images:[],
-      activeSlide: 0
+      activeSlide: 0,
+      good_angle: false,
     };
   }
   componentDidUpdate(previmage){
-    console.log("length of images array - "+ this.state.images.length);
+    //console.log("length of images array - "+ this.state.images.length);
     if (this.state.previmage !== this.state.image) {
         console.log("Enter UploadScreen - - - " + this.state.image);
         if(this.state.uploadReady){
-          this.setState({ uploadReady: null })
+          this.setState({ uploadReady: null,  })
           let imageTaken= [];
           imageTaken.push(this.state.image);
       }
     }
   }
 //Document Scanner Functions
-  renderDetectionType() {
+renderDetectionTypeText() {
+  switch (this.state.lastDetectionType) {
+    case 0:
+      return "Correct rectangle found"
+    case 1:
+      return "Bad angle found";
+    case 2:
+      return "Rectangle too far";
+    default:
+      return "No rectangle detected yet";
+  }
+}
+  renderDetectionTypeGoodAngle() {
     switch (this.state.lastDetectionType) {
       case 0:
-        return "Correct rectangle found"
-      case 1:
-        return "Bad angle found";
-      case 2:
-        return "Rectangle too far";
+        return (
+          <View style={styles.cf_right_elements}>
+            <Text style={{ fontSize: 14, color:'#35bf2f'}}> Good Angle </Text>
+            <Image source={require('../assets/images/Camera_icons/thumbs-up-Active.png')}  />
+            </View>
+      );
       default:
-        return "No rectangle detected yet";
+        return (
+          <View style={styles.cf_right_elements}>
+            <Text style={{ fontSize: 14, color:'#c7c4c4'}}> Good Angle </Text>
+            <Image source={require('../assets/images/Camera_icons/thumbs-up.png')}  />
+            </View>
+      );
+    }
+  }
+  renderDetectionTypeBadAngle() {
+    switch (this.state.lastDetectionType) {
+      case 0:
+        return (
+          <View style={styles.cf_right_elements}>
+            <Text style={{ fontSize: 14, color:'#c7c4c4' }}> Bad Angle </Text>
+            <Image source={require('../assets/images/Camera_icons/thumbs-down.png')}  />
+            </View>
+        );
+      default:
+        return (
+          <View style={styles.cf_right_elements}>
+            <Text style={{ fontSize: 14, color:'#F80000' }}> Bad Angle </Text>
+            <Image source={require('../assets/images/Camera_icons/thumbs-down-Active.png')}  />
+            </View>
+        );
     }
   }
   takePicture() {
     this.scan.capture();
-    this.setState({stableCounter:0});
+    this.setState({stableCounter:0, lastDetectionType: 2});
   }
   //Document Scanner Functions END
   //Carousel Functions
   _renderItem ({item, index}) {
         return (
-          <View style={styles.slide, {flex:1, width: 200, height: 200, alignItems: 'center', borderWidth: 1, borderColor: '#000'}}>
-          <Image style={{width: 200, height: 200 }} source={item} />
+          <View style={{flex:1, position: 'relative', width: 60, height: 60, borderWidth: 1, borderColor: '#000'}}>
+          <Image style={{width: 60, height: 80 }} source={item} />
       </View>
         );
     }
@@ -99,102 +140,127 @@ export default class CameraScreen extends React.Component {
            let source = { uri: 'data:image/jpeg;base64,' + images[i].data };
            console.log("CDU - " + source.uri);
            images[i]=source;
+           this.setState({
+             image: null,
+             images: [...this.state.images, images[i]],
+           });
          }
          this.setState({
            image: null,
-           images: images,
          },
        );
        }).catch(e => alert(e));
      }
-  renderCamera() {
-      return (
-        <View style={styles.container}>
-        <DocumentScanner ref={ref => {
-          this.scan = ref;
-        }}
-          useBase64
-          onPictureTaken={(data) => {
-            let source = { uri: 'data:image/jpeg;base64,' + data.croppedImage};
-            console.log('PICTURE TAKEN FROM DOCUMENT SCANNER');
-            //console.log("CameraScreen - " + data.croppedImage);
 
-              this.setState({ image: source,
-                images: [...this.state.images, source],
-            initialImage: data.initialImage,
-            rectangleCoordinates: data.rectangleCoordinates,
-            uploadReady:true
-          });
-              //this.props.navigation.push({ title: 'Upload Image', screen: "Upload", imageuri: `data:image/jpeg;base64,${this.state.image}`});
-            }
-          }
-          overlayColor="rgba(255,130,0, 0.7)"
-          enableTorch={this.state.flashEnabled}
-          useFrontCam={this.state.useFrontCam}
-          brightness={0.1}
-          saturation={0}
-          quality={0.8}
-          contrast={1.2}
-          onRectangleDetect={({ stableCounter, lastDetectionType }) => this.setState({ stableCounter, lastDetectionType })}
-          detectionCountBeforeCapture={5}
-          detectionRefreshRateInMS={100}
-          captureMultiple= {true}
-          style={styles.scanner}
-        />
-        <Image source={{ uri: `data:image/jpeg;base64,${this.state.image}`}} resizeMode="contain" />
-        <TouchableOpacity style={[styles.button, styles.left]} onPress={() => this.setState({ flashEnabled: !this.state.flashEnabled })}>
-          <Text>📸 Flash</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, styles.right]} onPress={() => this.setState({ useFrontCam: !this.state.useFrontCam })}>
-          <Text>📸 Front Cam</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={[styles.bottom]} onPress={this.takePicture.bind(this)}>
-          <Text> Take Picture </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.bottomRight]} onPress={this.completeScanning.bind(this)}>
-          <Text> Done </Text>
-        </TouchableOpacity>
-        <View style={[styles.bottomLeft]} >
-        {   this.state.images.length == 0 ?
-          <TouchableOpacity style={styles.selectImages} onPress={this.pickMultiple.bind(this)}>
-          <Text> Select Images from Library </Text>
-          </TouchableOpacity>:
-          <View  style={{height: 180, alignItems: 'center', marginBottom:-40 }}>
-
-          <Carousel
-             ref={(c) => { this._carousel = c; }}
-             data={this.state.images}
-             renderItem={this._renderItem}
-             sliderWidth={120}
-             itemWidth={80}
-             layout= 'default'
-             onSnapToItem= {(index) =>{
-               console.log("Activeslide - "+ index);
-
-               this.setState({ activeSlide: index });
-             }
-             }
-           />
-           { this.pagination }
-           </View>
-        }
-
-        </View>
-        <Text style={styles.instructions}>
-          ({this.state.stableCounter || 0} correctly formated rectangle detected
-        </Text>
-        <Text style={styles.instructions}>
-          {this.renderDetectionType()}
-        </Text>
-      </View>
-      );
-  }
   render() {
     return (
       <View style={styles.container}>
-        {this.renderCamera()}
-        {console.log(this.state.uploadReady)}
+        <View style={styles.hb_container}>
+          <View style={styles.hb_center}>
+            <Text style={{ fontSize: 20, color: '#fff' }}> Take Picture </Text>
+          </View>
+          <TouchableOpacity style={styles.hb_left} onPress= {() => this.clear()}>
+          <Icon name="arrow-round-back" style={{fontSize: 50, color: "#fff"}}></Icon>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.cs_container}>
+          <TouchableOpacity style={styles.cs_left} onPress={() => this.setState({ flashEnabled: !this.state.flashEnabled })}>
+          {(this.state.flashEnabled) ?
+            <Image source={require('../assets/images/Camera_icons/flash-iconActive.png')}  /> :
+            <Image source={require('../assets/images/Camera_icons/flash-icon.png')}  />
+          }
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.cs_right} onPress={() => this.setState({ useFrontCam: !this.state.useFrontCam })}>
+            <Image source={require('../assets/images/Camera_icons/switch_camera-icon.png')}  />
+          </TouchableOpacity>
+        </View>
+          {(!this.state.imageTaken) ?
+        <View style={styles.c_container}>
+          <DocumentScanner ref={ref => {
+              this.scan = ref;
+            }}
+              useBase64
+              onPictureTaken={(data) => {
+                console.log("PICTURE TAKEN");
+                let source = { uri: 'data:image/jpeg;base64,' + data.croppedImage};
+                  this.setState({ image: source,
+                    images: [...this.state.images, source],
+                initialImage: data.initialImage,
+                rectangleCoordinates: data.rectangleCoordinates,
+                uploadReady:true, lastDetectionType: 2, imageTaken:true
+              });
+                }
+              }
+              overlayColor="rgba(206,180,180, 0.7)"
+              enableTorch={this.state.flashEnabled}
+              useFrontCam={this.state.useFrontCam}
+              brightness={0.1}
+              saturation={0}
+              quality={0.8}
+              contrast={1.2}
+              onRectangleDetect={({ stableCounter, lastDetectionType }) => {
+                this.setState({ stableCounter, lastDetectionType })
+            }
+            }
+              detectionCountBeforeCapture={3}
+              detectionRefreshRateInMS={80}
+              captureMultiple= {true}
+              style={styles.scanner}
+        />
+        </View> :
+        <View style={styles.c_container}>
+        <Image style={{width: "100%", height: "100%"}} source={this.state.image} resizeMode= "contain"/>
+        <TouchableOpacity style={{position: 'absolute', left:'10%', bottom: '10%', }} onPress= {() => this.clear()}>
+            <Image  source={require('../assets/images/Camera_icons/cancel-icon.png')}  />
+        </TouchableOpacity>
+        <TouchableOpacity style={{position: 'absolute', right:'10%', bottom: '10%', }} onPress= {() => this.clear()}>
+            <Image  source={require('../assets/images/Camera_icons/check-icon.png')}  />
+        </TouchableOpacity>
+
+        </View>
+      }
+        <View style={styles.cf_container}>
+          <View style={styles.cf_right}>
+              {this.renderDetectionTypeGoodAngle()}
+              {this.renderDetectionTypeBadAngle()}
+          </View>
+          <TouchableOpacity style={styles.cf_center} activeOpacity= {0.6} onPress={this.takePicture.bind(this)}>
+            <Image style= {{width: '90%', height: '80%'}} source={require('../assets/images/Camera_icons/take_photo-icon.png')}  />
+          </TouchableOpacity>
+          <View style={styles.cf_left}>
+          {
+            (this.state.images.length > 0) ?
+            <View style={styles.cf_left_imagebox}>
+              <View style={styles.cf_left_imagecount}>
+                <Text style={{color: "#365C80"}}> {this.state.images.length} </Text>
+              </View>
+              <View  style={{position: 'absolute',top:0 , justifyContent: 'center'}}>
+              <Carousel
+                 ref={(c) => { this._carousel = c; }}
+                 data={this.state.images}
+                 renderItem={this._renderItem}
+                 sliderWidth={80}
+                 itemWidth={50}
+                 layout= 'stack'
+                 onSnapToItem= {(index) =>{
+                   console.log("Activeslide - "+ index);
+                   this.setState({ activeSlide: index });
+                 }
+                 }
+               />
+               </View>
+            </View> : <View />
+        }
+        </View>
+        </View>
+        <View style={styles.pf_container}>
+          <TouchableOpacity style={styles.pf_left} onPress={this.pickMultiple.bind(this)}>
+            <Text style={{color: "#fff", fontSize: 15}}> Select from Library </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.pf_right} onPress={this.completeScanning.bind(this)}>
+            <Text style={{color: "#fff"}}> Upload </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -202,87 +268,198 @@ export default class CameraScreen extends React.Component {
     console.log("length of images array - "+ this.state.images.length);
     this.props.navigation.navigate('Upload',{Image:this.state.image, Images: this.state.images})
   }
+  clear(){
+    this.setState({
+      image: null,
+      flashEnabled: false,
+      useFrontCam: false,
+      uploadReady: null,
+      images:[],
+      activeSlide: 0,
+      good_angle: false,
+    });
+    this.props.navigation.navigate('Links');
 }
-const styles ={
+}
+const styles =  {
   container: {
     flex: 1,
+    flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    alignItems: 'stretch',
   },
-  button: {
+  //HeaderBanner = hb
+  hb_container: {
+    height: '8%',
+    backgroundColor: '#365C80',
+  },
+  hb_left: {
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 10,
-    top: 20,
-    bottom: 20,
-    height: 40,
-    width: 120,
-    backgroundColor: '#FFF',
+    top: 0,
+    bottom: 0,
+    left: '5%',
   },
-  bottom: {
+  hb_center: {
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 10,
-    bottom: 45,
-    height: 40,
-    width: 120,
-    backgroundColor: '#FFF'
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
-  bottomRight: {
+  //Camera Settings = cs
+  cs_container: {
+    height: '8%',
+    backgroundColor: '#fff',
+  },
+  cs_left: {
+    height: '100%',
+    width: '20%',
     position: 'absolute',
     alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 10,
-    bottom: 45,
-    right: 10,
-    height: 40,
-    width: 80,
-    backgroundColor: '#FFF'
-  },
-  bottomLeft: {
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 10,
-    bottom: 45,
-    left: 20,
-    height: 100,
-    width: 100,
-  },
-  left: {
-    left: 20,
-  },
-  right: {
-    right: 20,
-  },
-  instructions: {
+    bottom: 0,
+    left: 0,
+    backgroundColor: '#fff',
     textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  cs_right: {
+    height: '100%',
+    width: '20%',
+    position: 'absolute',
+    alignItems: 'center',
+    bottom: 0,
+    right: 0,
+    backgroundColor: '#fff',
+    textAlign: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  // Camera = c
+  c_container: {
+    height: '62%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  c_bottom_left: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    bottom: 0,
+    left: 0,
+  },
+  c_bottom_right: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: 0,
+    bottom: 0,
   },
   scanner: {
     flex: 1,
-    width: 400,
-    height: 200,
     borderColor: 'orange',
-    borderWidth: 1
+    borderWidth: 1,
+    alignSelf: 'stretch'
   },
-  selectImages: {
-    alignSelf:'center',
+  c_main: {},
+  //Camera Functions = pf
+  cf_container: {
+    height: '12%',
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cf_left: {
+    height: '100%',
+    width: '30%',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  cf_left_imagebox: {
+    height: '80%',
+    width: '75%',
+    left: 0,
+    zIndex: 0
+  },
+  cf_left_imagecount: {
+    postion: 'absolute',
+    top: '-10%',
+    right: '0%',
+    alignSelf: 'flex-end',
+    borderColor: '#365C80',
+    borderWidth: 2,
+    borderRadius: 100,
+    zIndex: 1,
+    backgroundColor: "#fff"
+  },
+  cf_center: {
+    height: '100%',
+    width: '20%',
+    position: 'absolute',
+    alignItems: 'center',
+    bottom: '0%',
+    top:'2%',
+    textAlign: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  cf_right: {
+    height: '100%',
+    width: '30%',
+    position: 'absolute',
+    alignItems: 'center',
+    bottom: 0,
+    right: 0,
+    backgroundColor: '#fff',
+    textAlign: 'center',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  cf_right_elements: {
+    height: '50%',
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection:'row'
+  },
+  // Picture Functions= pf
+  pf_container: {
+    height: '10%',
+    backgroundColor: '#fff',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  pf_left: {
+    height: '50%',
+    width: '45%',
+    position: 'absolute',
+    alignItems: 'center',
+    left: '2%',
+    backgroundColor: '#365C80',
     textAlign: 'center',
     justifyContent: 'center',
-    color:'#007aff',
-    fontSize:16,
-    fontWeight: '600',
-    height : 100,
-    width : 100,
-    borderRadius:5,
-    borderWidth:1,
-    borderColor:'#007aff',
-    backgroundColor: '#FFF'
-
+    borderRadius: 15,
+    paddingLeft: '8%',
+    paddingRight: '8%',
+  },
+  pf_right: {
+    height: '50%',
+    width: '45%',
+    position: 'absolute',
+    alignItems: 'center',
+    right: '2%',
+    backgroundColor: '#365C80',
+    textAlign: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    borderRadius: 15,
   },
 }

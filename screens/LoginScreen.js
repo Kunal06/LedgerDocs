@@ -79,20 +79,6 @@ authenticate(){
   });
 }
 
-onButtonPress(){
-  const { email,password } = this.state;
-
-  this.setState({error: '', loading: true});
-
-  firebase.auth().signInWithEmailAndPassword(email,password)
-    .then(this.onLoginSuccess.bind(this))
-    .catch(() => {
-      firebase.auth().createUserWithEmailAndPassword(email,password)
-        .then(this.onLoginSuccess.bind(this))
-        .catch(this.onLoginFail.bind(this));
-  });
-}
-
 _signInAsync = async () => {
   //console.log(" SIGN IN SUCCESFUL");
   // console.log("USERNAME - " + this.state.email);
@@ -119,6 +105,7 @@ let user = {
    // console.log(currentUser.loggedIn);
    // console.log(currentUser.user_name);
    // console.log(currentUser.password);
+  
    this.props.navigation.navigate('AuthLoading');
  };
 onLoginFail(){
@@ -129,8 +116,7 @@ onLoginFail(){
 }
 onLoginSuccess(){
   this._signInAsync();
-  this.setState({email:'',
-  password:'',
+  this.setState({
   error: '',
   loading: false,
   remember: false

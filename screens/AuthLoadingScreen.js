@@ -12,6 +12,7 @@ import { createStackNavigator, createSwitchNavigator } from 'react-navigation';
 export default class AuthLoadingScreen extends React.Component {
   constructor() {
     super();
+
     this._bootstrapAsync();
   }
 
@@ -26,7 +27,10 @@ export default class AuthLoadingScreen extends React.Component {
 
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
-    this.props.navigation.navigate(userToken.LoggedIn == "true" ? 'Main' : 'Auth');
+    this.timeoutHandle = setTimeout(()=>{
+              // Add your logic for the transition
+              this.props.navigation.navigate(userToken.LoggedIn == "true" ? 'Main' : 'Auth');
+         }, 1000);
   };
   render() {
     return (
