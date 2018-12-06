@@ -61,6 +61,13 @@ renderDetectionTypeText() {
             <Image source={require('../assets/images/Camera_icons/thumbs-up-Active.png')}  />
             </View>
       );
+      case 6:
+        return (
+          <View style={styles.cf_right_elements}>
+            <Text style={{ fontSize: 14, color:'#c7c4c4'}}> Good Angle </Text>
+            <Image source={require('../assets/images/Camera_icons/thumbs-up-Active.png')}  />
+            </View>
+      );
       default:
         return (
           <View style={styles.cf_right_elements}>
@@ -79,6 +86,13 @@ renderDetectionTypeText() {
             <Image source={require('../assets/images/Camera_icons/thumbs-down.png')}  />
             </View>
         );
+        case 6:
+          return (
+            <View style={styles.cf_right_elements}>
+              <Text style={{ fontSize: 14, color:'#c7c4c4' }}> Bad Angle </Text>
+              <Image source={require('../assets/images/Camera_icons/thumbs-down.png')}  />
+              </View>
+          );
       default:
         return (
           <View style={styles.cf_right_elements}>
@@ -90,7 +104,7 @@ renderDetectionTypeText() {
   }
   takePicture() {
     this.scan.capture();
-    this.setState({stableCounter:0, lastDetectionType: 2});
+    this.setState({stableCounter:0, lastDetectionType: 6});
   }
   //Document Scanner Functions END
   //Carousel Functions
@@ -181,13 +195,12 @@ renderDetectionTypeText() {
             }}
               useBase64
               onPictureTaken={(data) => {
-                console.log("PICTURE TAKEN");
+                //console.log("PICTURE TAKEN");
                 let source = { uri: 'data:image/jpeg;base64,' + data.croppedImage};
                   this.setState({ image: source,
-                    images: [...this.state.images, source],
                 initialImage: data.initialImage,
                 rectangleCoordinates: data.rectangleCoordinates,
-                uploadReady:true, lastDetectionType: 2, imageTaken:true
+                uploadReady:true, lastDetectionType: 6, imageTaken:true
               });
                 }
               }
@@ -210,10 +223,10 @@ renderDetectionTypeText() {
         </View> :
         <View style={styles.c_container}>
         <Image style={{width: "100%", height: "100%"}} source={this.state.image} resizeMode= "contain"/>
-        <TouchableOpacity style={{position: 'absolute', left:'10%', bottom: '10%', }} onPress= {() => this.clear()}>
+        <TouchableOpacity style={{position: 'absolute', left:'10%', bottom: '10%', }} onPress= {() => this.deleteImage()}>
             <Image  source={require('../assets/images/Camera_icons/cancel-icon.png')}  />
         </TouchableOpacity>
-        <TouchableOpacity style={{position: 'absolute', right:'10%', bottom: '10%', }} onPress= {() => this.clear()}>
+        <TouchableOpacity style={{position: 'absolute', right:'10%', bottom: '10%', }} onPress= {() => this.acceptImage()}>
             <Image  source={require('../assets/images/Camera_icons/check-icon.png')}  />
         </TouchableOpacity>
 
@@ -263,6 +276,19 @@ renderDetectionTypeText() {
         </View>
       </View>
     );
+  }
+  acceptImage(){
+    this.setState({
+      images: [...this.state.images, this.state.image],
+      lastDetectionType: 2,
+      imageTaken:false
+});
+  }
+  deleteImage(){
+    this.setState({
+      lastDetectionType: 2,
+      imageTaken:false
+});
   }
   completeScanning(){
     console.log("length of images array - "+ this.state.images.length);
