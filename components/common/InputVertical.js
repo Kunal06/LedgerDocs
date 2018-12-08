@@ -3,7 +3,8 @@ import { TextInput,Text, View } from 'react-native';
 
 const InputVertical = ({label,value,onChangeText,placeholder,secureTextEntry}) => {
   const {inputStyle, labelstyle,containerStyle} = styles;
-return(
+return (
+
   <View style= {containerStyle}>
     <Text style= {labelstyle}>
       {label}
@@ -17,7 +18,6 @@ return(
       value = {value}
       onChangeText = {onChangeText}
       />
-
   </View>
   );
 };

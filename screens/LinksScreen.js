@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert,AsyncStorage, TouchableOpacity,ScrollView, StyleSheet, Text, View, Image, PixelRatio } from 'react-native';
+import { SafeAreaView, Alert,AsyncStorage, TouchableOpacity,ScrollView, StyleSheet, Text, View, Image, PixelRatio } from 'react-native';
 import {Header, Button, Spinner, Card, CardSection} from '../components/common';
 import Icon from 'react-native-ionicons';
 
@@ -102,50 +102,57 @@ state = {
          image: null,
          images: images,
        });
-     }).catch(e => alert(e));
+     }).catch(e => console.log(e));
    }
   render() {
     return (
+      <SafeAreaView style={styles.loggedIncontainer}>
       <View style={styles.container}>
         <View style={styles.hb_container}>
           <View style={styles.hb_center}>
             <Text style={{ fontSize: 23, color: '#fff' }}> Take Picture </Text>
           </View>
-          <TouchableOpacity style={styles.hb_left} onPress= {() => this.clear()}>
+          <TouchableOpacity style={styles.hb_left} onPress= {() => this.props.navigation.navigate('Links')}>
           <Icon name="arrow-round-back" style={{fontSize: 50, color: "#fff"}}></Icon>
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.si_container}>
+        <TouchableOpacity style={styles.si_container} onPress={this.selectPhotoTapped.bind(this)}>
         <Image source={require('../assets/images/Camera_icons/cam.png')} style= {{position: 'absolute',
-        top: '20%',width: 110, height: '50%'}} />
+        top: '20%',width: "18%", height: '45%'}} />
         <View style={styles.si_text_container}>
         <Text style= {{fontSize: 23, color: '#365C80'}}> Take Single Photo </Text>
         </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.cs_container}>
+        <TouchableOpacity style={styles.cs_container} onPress={() => this.props.navigation.navigate('Camera',{Image: this.state.imageSource})}>
         <Image source={require('../assets/images/Camera_icons/camera-borders.png')} style= {{position: 'absolute',
-        top: '10%',width: '25%', height: '70%'}} />
+        top: '10%',width: '18%', height: '50%'}} />
         <View style={styles.cs_text_container}>
         <Text style= {{fontSize: 23, color: '#365C80'}}> Scan Documents </Text>
         </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.c_container}>
+        <TouchableOpacity style={styles.c_container} onPress={this.pickMultiple.bind(this)}>
         <Image source={require('../assets/images/Camera_icons/select_images.png')} style= {{position: 'absolute',
-        top: '10%',width: '25%', height: '50%'}} />
+        top: '10%',width: '18%', height: '32%'}} />
         <View style={styles.c_text_container}>
         <Text style= {{fontSize: 23, color: '#365C80'}}> Select Images </Text>
         </View>
         </TouchableOpacity>
       </View>
+      </SafeAreaView>
     );
   }
 
 }
 
 const styles = StyleSheet.create({
+  loggedIncontainer:
+      {
+        flex: 1,
+        backgroundColor:'#fff',
+      },
   container: {
     flex: 1,
     flexDirection: 'column',
@@ -177,7 +184,7 @@ const styles = StyleSheet.create({
   },
   //Single Image = hb
   si_container: {
-     height: '30%',
+     height: '20%',
     backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center'
@@ -185,7 +192,7 @@ const styles = StyleSheet.create({
   si_text_container: {
     height: '20%',
     position: 'absolute',
-    bottom: '5%'
+    bottom: '10%'
 
   },
   //Camera Settings = cs
@@ -211,6 +218,6 @@ const styles = StyleSheet.create({
   c_text_container: {
     height: '20%',
     position: 'absolute',
-    bottom: '5%'
+    bottom: '20%'
   }
 });

@@ -27,8 +27,10 @@ paddingBottom:10
     backgroundColor: '#365C80',
     borderRadius:5,
     borderWidth:1,
-    marginLeft:5,
-    marginRight:5
+    marginLeft:'5%',
+    marginRight:'5%',
+    justifyContent: 'center',
+    height: '50%'
   }
 };
 export {Button};

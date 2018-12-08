@@ -6,7 +6,7 @@ import {Header, Button, Spinner} from '../components/common';
 
 export default class SettingsScreen extends React.Component {
   static navigationOptions = {
-    header:<Header headText="Settings"> </Header>,
+    header:null,
     title: null,
   };
   constructor(props){
@@ -16,15 +16,22 @@ export default class SettingsScreen extends React.Component {
 
   render() {
     return (
+      <SafeAreaView style={styles.loggedIncontainer}>
+      <View style={styles.hb_container}>
+        <View style={styles.hb_center}>
+          <Text style={{ fontSize: 20, color: '#fff' }}> Settings  </Text>
+        </View>
+        </View>
       <View style= {styles.container} >
       <TouchableOpacity style={{height: 100,}, styles.buttonStyle} onPress={this._signOutAsync}>
       <Text style={styles.textStyle}> Log Out </Text>
       </TouchableOpacity>
       </View>
+      </SafeAreaView>
     );
   }
 
-  _signOutAsync= async () => {
+  _signOutAsync = async () => {
     const currentUser = JSON.parse (await AsyncStorage.getItem('User'));
     let user = {
     LoggedIn: 'false',
@@ -38,6 +45,33 @@ export default class SettingsScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  loggedIncontainer:
+      {
+        flex: 1,
+        backgroundColor:'#fff',
+      },
+      //HeaderBanner = hb
+      hb_container: {
+        height: '8%',
+        backgroundColor: '#365C80',
+      },
+      hb_left: {
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center',
+        top: 0,
+        bottom: 0,
+        left: '5%',
+      },
+      hb_center: {
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+      },
   container:
     {
         flex: 1,

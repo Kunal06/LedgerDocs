@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Picker, Switch, KeyboardAvoidingView, ActivityIndicator,AsyncStorage,PixelRatio, Alert, TouchableOpacity,ScrollView, StyleSheet, Text, View, Image, TextInput, PickerItemIOS } from 'react-native';
+import {SafeAreaView, Picker, Switch, KeyboardAvoidingView, ActivityIndicator,AsyncStorage,PixelRatio, Alert, TouchableOpacity,ScrollView, StyleSheet, Text, View, Image, TextInput, PickerItemIOS } from 'react-native';
 import { Header,Input, Button, Spinner, Card, CardSection} from '../components/common';
 import Icon from 'react-native-ionicons';
 import IOSPicker from 'react-native-ios-picker';
@@ -47,7 +47,7 @@ export default class UploadScreen extends React.Component {
     //console.log("New array images 0- " + this.state.images[0].uri);
   }
   static navigationOptions = {
-    header: <Header headText="Upload Image"> </Header>,
+    header: null,
   };
   _bootstrapAsync = async () => {
     const currentUser = JSON.parse (await AsyncStorage.getItem('User'));
@@ -119,6 +119,15 @@ export default class UploadScreen extends React.Component {
   render() {
     //const { selectedItems } = this.state;
     return (
+      <SafeAreaView style={styles.loggedIncontainer}>
+      <View style={styles.hb_container}>
+        <View style={styles.hb_center}>
+          <Text style={{ fontSize: 20, color: '#fff' }}> Upload Picture </Text>
+        </View>
+        <TouchableOpacity style={styles.hb_left} onPress= {() => this.props.navigation.navigate('Camera')}>
+        <Icon name="arrow-round-back" style={{fontSize: 50, color: "#fff"}}></Icon>
+        </TouchableOpacity>
+      </View>
       <ScrollView style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={styles.container}>
       <KeyboardAvoidingView style={styles.container}
@@ -131,7 +140,7 @@ export default class UploadScreen extends React.Component {
                 ref={(c) => { this._carousel = c; }}
                 data={this.state.images}
                 renderItem={this._renderItem}
-                sliderWidth={230}
+                sliderWidth={350}
                 itemWidth={200}
                 layout= 'default'
                 removeClippedSubviews={false}
@@ -150,14 +159,13 @@ export default class UploadScreen extends React.Component {
               />
               { this.pagination }
               </View>
-             <View title="Select me" style={{width: 300, marginBottom: 20, alignItems: 'center'}}>
-             <Text style= {styles.textStyle}> Select Project </Text>
+             <View style={{width: 300, height: 70, padding: 5, backgroundColor: '#DDECF9'}}>
              <IOSPicker
-             style= {{width: 200, height:25, borderRadius:5,
-             borderWidth:1,
-             borderColor:'#007aff'}}
+             style= {{width: 300, height:40, borderRadius:5,
+             borderBottomWidth: 1,
+             borderBottomColor:'#365C80'}}
              selectedValue={this.state.selectedValue}
-             mode='modal'
+             mode="modal"
              onValueChange={(d, i)=> this.change(d, i)}>
              {
                 projects.map((item, index)=>
@@ -166,7 +174,7 @@ export default class UploadScreen extends React.Component {
               }
               </IOSPicker>
              </View>
-             <CardSection style={{ maxHeight:530 }}>
+             <CardSection style={{ maxHeight:550 }}>
            <View style={styles.multi}>
              <MultiSelect
                items={this.state.tags}
@@ -177,20 +185,20 @@ export default class UploadScreen extends React.Component {
                selectText="Select Tags "
                searchInputPlaceholderText="Search Tags..."
                onChangeInput={ (text)=> console.log(text)}
-               tagRemoveIconColor="#CCC"
-               tagBorderColor="#CCC"
                tagTextColor="#000"
-               selectedItemTextColor="#CCC"
-               selectedItemIconColor="#CCC"
-               itemTextColor="#000"
+               selectedItemTextColor="#365C80"
+               selectedItemIconColor="#365C80"
+               itemTextColor="#c7c4c4"
                displayKey="val"
-               searchInputStyle={{ color: '#CCC' }}
+               searchInputStyle={{ color: '#CCC', borderBottomWidth: 1, borderBottomColor: "#365C80"}}
                submitButtonColor="#CCC"
                submitButtonText="Submit"
                hideSubmitButton
                autoFocusInput= {false}
+               tagBorderColor= {'#365C80'}
+               tagRemoveIconColor ={'#365C80'}
              />
-             <ScrollView style= {{padding:10}}>
+             <ScrollView style= {{padding:10, height: 30}}>
              {
                this.multiselect
                ?
@@ -244,6 +252,8 @@ export default class UploadScreen extends React.Component {
 
       </View>
       </ScrollView>
+      </SafeAreaView>
+
     );
   }
   handleTextInput= note =>{
@@ -529,12 +539,40 @@ export default class UploadScreen extends React.Component {
 }
 
 const styles = {
+  loggedIncontainer:
+      {
+        flex: 1,
+        backgroundColor:'#fff',
+      },
+
   container: {
     flex: 1,
     backgroundColor: '#fff',
     flexDirection: 'column',
      alignItems: 'center',
      justifyContent: 'space-between',
+  },
+  //HeaderBanner = hb
+  hb_container: {
+    height: '8%',
+    backgroundColor: '#365C80',
+  },
+  hb_left: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    top: 0,
+    bottom: 0,
+    left: '5%',
+  },
+  hb_center: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
   avatar: {
     width: 200,
@@ -551,9 +589,11 @@ const styles = {
   },
   multi: {
     flex: 1,
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#DDECF9',
     padding: 10,
-    flex: 1,width: 300, maxHeight:530,
+    width: 300,
+    height: 240,
+    maxHeight:530,
   },
   buttonStyle: {
     alignSelf: 'stretch',

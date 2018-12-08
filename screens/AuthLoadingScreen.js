@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  SafeAreaView,
   ActivityIndicator,
   AsyncStorage,
   Button,
@@ -22,7 +23,18 @@ export default class AuthLoadingScreen extends React.Component {
     console.log("userToken - "+ JSON.stringify(userToken));
     if (userToken == null){
       this.props.navigation.navigate('Auth');
-    }
+      let user = {
+        LoggedIn: false,
+        user_name:  '',
+        password:  '',
+        remember: false
+      }
+
+        await AsyncStorage.setItem('User', JSON.stringify(user));
+
+    } else {
+
+
     //console.log(userToken.LoggedIn == "true" ? "Main" : "Auth");
 
     // This will switch to the App screen or Auth screen and this loading
@@ -31,18 +43,26 @@ export default class AuthLoadingScreen extends React.Component {
               // Add your logic for the transition
               this.props.navigation.navigate(userToken.LoggedIn == "true" ? 'Main' : 'Auth');
          }, 1000);
+       }
   };
   render() {
     return (
+      <SafeAreaView style={styles.loggedIncontainer}>
       <View style={styles.container}>
         <ActivityIndicator />
         <StatusBar barStyle="default" />
       </View>
+      </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  loggedIncontainer:
+      {
+        flex: 1,
+        backgroundColor:'#fff',
+      },
   container: {
     flex: 1,
     alignItems: 'center',

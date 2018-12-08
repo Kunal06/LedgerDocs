@@ -1,5 +1,5 @@
 import React,{ Component } from 'react';
-import { Text, View, TouchableOpacity,Image,Dimensions, TouchableHighlight } from 'react-native';
+import {SafeAreaView, Text, View, TouchableOpacity,Image,Dimensions, TouchableHighlight } from 'react-native';
 import DocumentScanner from 'react-native-document-scanner';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import MultipleImagePicker from 'react-native-image-crop-picker';
@@ -168,6 +168,7 @@ renderDetectionTypeText() {
 
   render() {
     return (
+      <SafeAreaView style={styles.loggedIncontainer}>
       <View style={styles.container}>
         <View style={styles.hb_container}>
           <View style={styles.hb_center}>
@@ -275,6 +276,7 @@ renderDetectionTypeText() {
           </TouchableOpacity>
         </View>
       </View>
+      </SafeAreaView>
     );
   }
   acceptImage(){
@@ -308,6 +310,11 @@ renderDetectionTypeText() {
 }
 }
 const styles =  {
+  loggedIncontainer:
+      {
+        flex: 1,
+        backgroundColor:'#fff',
+      },
   container: {
     flex: 1,
     flexDirection: 'column',

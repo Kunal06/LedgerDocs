@@ -19,7 +19,7 @@ HomeStack.navigationOptions = {
   tabBarLabel: 'Home',
   tabBarIcon: ({ focused }) => (
     focused ? <Image
-          source={require('../assets/images/Camera_icons/bell-notification.png')}
+          source={require('../assets/images/Camera_icons/bell-notification-white.png')}
           style={{height: '80%', width: '18%'}}
         />
         :
@@ -37,13 +37,16 @@ const LinksStack = createStackNavigator({
 },
   Camera: CameraScreen,
   Upload: UploadScreen,
+},
+{
+  initialRouteName: 'Links',
 });
 
 LinksStack.navigationOptions = ({ navigation }) => {
   let { routeName } = navigation.state.routes[navigation.state.index];
   let navigationOptions = {tabBarLabel: 'Camera', tabBarIcon: ({ focused }) => (
     focused ? <Image
-          source={require('../assets/images/Camera_icons/camera.png')}
+          source={require('../assets/images/Camera_icons/camera-white.png')}
           style={{height: '70%', width: '20%'}}
         />
         :
@@ -70,7 +73,7 @@ SettingsStack.navigationOptions = {
   tabBarLabel: 'Settings',
   tabBarIcon: ({ focused }) => (
     focused ? <Image
-          source={require('../assets/images/Camera_icons/setting-icon.png')}
+          source={require('../assets/images/Camera_icons/setting-icon-white.png')}
           style={{height: '70%', width: '20%'}}
         />
         :

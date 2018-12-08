@@ -15,27 +15,15 @@ import {Header, Button, Spinner,Card, CardSection,Input} from './components/comm
 
 import { createStackNavigator, createSwitchNavigator } from 'react-navigation';
 
-//PHP Authentication
-
-const userData = {
-  "user_name": '',
-  "password": '',
-  "client_OS": 'IOS',
-}
 export default class App extends React.Component {
 
   componentDidMount(){
     SplashScreen.hide();
   }
-  
+
 render(){
   return (
-    <SafeAreaView style={styles.container}>
-    <View style = {styles.MainContainer}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
         <AppNavigator />
-      </View>
-      </SafeAreaView>
   );
 }
 }
@@ -44,7 +32,12 @@ const styles = {
   container:
     {
         flex: 1,
-        backgroundColor:'#DDECF9'
+        backgroundColor:'#DDECF9',
+    },
+loggedIncontainer:
+    {
+      flex: 1,
+      backgroundColor:'#fff',
     },
   MainContainer:
     {

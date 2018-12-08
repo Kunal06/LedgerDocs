@@ -1,16 +1,16 @@
 // import libraries for making a Component
 import React from 'react';
-import { Text, View } from 'react-native';
+import {SafeAreaView, Text, View } from 'react-native';
 
 // Make a Component
 const Header= (props) => {
   const {textStyle, viewStyle} = styles;
 
   return (
-  <View style= {viewStyle} >
+  <SafeAreaView style= {viewStyle} >
     <Text style= {textStyle}>   {props.headText}
     </Text>
-  </View>
+  </SafeAreaView>
 );
 };
 

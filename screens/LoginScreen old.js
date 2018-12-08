@@ -138,23 +138,18 @@ renderButton(){
       behavior="position"
       keyboardVerticalOffset={-100}
       enabled>
-      <View style={styles.container}>
-      <View style={styles.hb_container}>
-        <View style={styles.hb_center}>
-        <Image
-          style= {{alignSelf: 'center'}}
-          source={require('../assets/images/Logo.png')}
-        />
-        </View>
-      </View>
-
-      <View style={styles.si_container}>
-      <Text style= {{ fontSize: 23, color: "#365C80"}}>
+      <View>
+      <Card>
+      <Image
+        style= {{alignSelf: 'center'}}
+        source={require('../assets/images/Logo.png')}
+      />
+      <Text style= {{alignSelf: 'center', fontSize: 23, color: "#365C80"}}>
       Log in to your Account
       </Text>
-      </View>
+      </Card>
 
-      <View style={styles.cs_container} >
+      <Card>
       <View style={styles.inputFieldContainer}>
           <InputVertical
             placeholder= ''
@@ -194,14 +189,14 @@ renderButton(){
            Remember Me
          </Text>
          </View>
-      </View>
-      <View style={styles.c_container} >
-       {this.renderButton()}
-     <View style= {styles.signup}>
-       <Text style= {{ alignSelf: 'center', fontSize: 14}}> Don't Have an Account? <Text style={{textDecorationLine: 'underline'}}> Sign up </Text></Text>
-     </View>
-      </View>
+         <View style= {{height: 80}}>
+          {this.renderButton()}
+          </View>
+        <View style= {styles.signup}>
+          <Text style= {{ alignSelf: 'center', fontSize: 14}}> Don't Have an Account? <Text style={{textDecorationLine: 'underline'}}> Sign up </Text></Text>
+        </View>
 
+      </Card>
       </View>
       </KeyboardAvoidingView>
 </SafeAreaView>
@@ -213,66 +208,6 @@ const styles = {
       {
         flex: 1,
         backgroundColor:'#DDECF9',
-      },
-      container: {
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'stretch',
-        backgroundColor:'#DDECF9'
-      },
-      //HeaderBanner = hb
-      hb_container: {
-        height: '20%',
-        backgroundColor: '#DDECF9',
-      },
-      hb_left: {
-        position: 'absolute',
-        alignItems: 'center',
-        justifyContent: 'center',
-        top: 0,
-        bottom: 0,
-        left: '5%',
-      },
-      hb_center: {
-        position: 'absolute',
-        alignItems: 'center',
-        bottom: 0,
-        left: 0,
-        right: 0,
-      },
-      //Single Image = hb
-      si_container: {
-        height: '10%',
-        backgroundColor: '#DDECF9',
-        justifyContent: 'center',
-        alignItems: 'center'
-      },
-      si_text_container: {
-        display:'inline-block',
-
-      },
-      //Camera Settings = cs
-      cs_container: {
-        height: '35%',
-        justifyContent: 'center',
-        alignItems: 'center'
-      },
-      cs_text_container: {
-        height: '18%',
-        position: 'absolute',
-        bottom: '0%'
-
-      },
-      // Camera = c
-      c_container: {
-        height: '30%',
-        justifyContent: 'center',
-        alignItems: 'center',
-      },
-      c_text_container: {
-        height: '20%',
-        position: 'absolute',
-        bottom: '20%'
       },
   errorTextStyle: {
     fontSize: 20,
@@ -286,8 +221,7 @@ const styles = {
     borderRadius:5,
     borderWidth:1,
     borderColor:'#007aff',
-    justifyContent: 'center',
-    alignSelf: 'stretch'
+    justifyContent: 'center'
   },
   inputFieldContainer:  {
     padding: 5,
@@ -302,21 +236,22 @@ const styles = {
 
   },
    loginButton:  {
-     padding: 20,
+    alignItems:"center",
+    padding: 20,
     backgroundColor :'#DDECF9',
     position: 'relative',
     alignItems: 'center',
-    justifyContent: 'center',
-    height: 80,
-    width: 350,
+    height: 90,
      maxHeight:500 ,
+
   },
   signup:{
     alignItems:"center",
     backgroundColor :'#DDECF9',
     position: 'relative',
     alignItems: 'flex-start',
-    height: '30%',
+    height: 80,
+     maxHeight:80 ,
      flexDirection: 'column',
      color: "#365C80"
   },
@@ -341,7 +276,6 @@ const styles = {
     position: 'relative',
     padding: 5,
     flexDirection: 'row',
-    alignSelf: 'flex-start'
   },
   switchTextStyle:
   {
@@ -351,3 +285,12 @@ const styles = {
     flexDirection: 'row',
   },
 };
+
+
+/*          onChangeText={password => this.setState({password})} />
+    "password" can be called whatever as it is the variable
+    representing the value received from the field
+    // justifyContent- Horizontal, alignItems- Vertical
+    bind- to make sure we stay in the same context as the class as
+    we dont know when it will be run
+    */

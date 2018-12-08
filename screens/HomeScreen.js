@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  SafeAreaView,
   Image,
   Platform,
   ScrollView,
@@ -27,7 +28,7 @@ var updateKeys= [];
 var updateValues= [];
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
-    header: <Header headText="Home"> </Header>,
+    header: null,
   };
   state = { email: '', password: '', };
   constructor(props){
@@ -75,6 +76,12 @@ export default class HomeScreen extends React.Component {
   }
   render() {
     return (
+      <SafeAreaView style={styles.loggedIncontainer}>
+      <View style={styles.hb_container}>
+        <View style={styles.hb_center}>
+          <Text style={{ fontSize: 20, color: '#fff' }}> Notifications  </Text>
+        </View>
+        </View>
       <View style={styles.container}>
         <ScrollView style={styles.container, {marginTop: 120,}}
         refreshControl={
@@ -114,6 +121,7 @@ export default class HomeScreen extends React.Component {
 
         </View>
       </View>
+      </SafeAreaView>
     );
   }
   change(d, i) {
@@ -270,6 +278,33 @@ console.log("Selected Value - " + this.state.selectedValue);
 }
 
 const styles = {
+  loggedIncontainer:
+      {
+        flex: 1,
+        backgroundColor:'#fff',
+      },
+      //HeaderBanner = hb
+      hb_container: {
+        height: '8%',
+        backgroundColor: '#365C80',
+      },
+      hb_left: {
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center',
+        top: 0,
+        bottom: 0,
+        left: '5%',
+      },
+      hb_center: {
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+      },
   container: {
     flex: 1,
     backgroundColor: '#fff',
