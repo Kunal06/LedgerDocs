@@ -111,8 +111,8 @@ export default class UploadScreen extends React.Component {
         );
       }
       return (
-        <TouchableOpacity style={{height: 100, alignItems:'stretch',}, styles.buttonStyle} onPress={this.uploadImage.bind(this)}>
-        <Text style={styles.textStyle}> Upload Image </Text>
+        <TouchableOpacity style={styles.pf_right} onPress={this.uploadImage.bind(this)} >
+          <Text style={{color: "#fff"}}> Upload Image </Text>
         </TouchableOpacity>
       );
     }
@@ -159,7 +159,7 @@ export default class UploadScreen extends React.Component {
               />
               { this.pagination }
               </View>
-             <View style={{width: 300, height: 70, padding: 5, backgroundColor: '#DDECF9'}}>
+             <View style={{width: 310, height: 70, alignItems: 'flex-start', marginLeft: '1.5%', backgroundColor: '#DDECF9'}}>
              <IOSPicker
              style= {{width: 300, height:40, borderRadius:5,
              borderBottomWidth: 1,
@@ -193,10 +193,11 @@ export default class UploadScreen extends React.Component {
                searchInputStyle={{ color: '#CCC', borderBottomWidth: 1, borderBottomColor: "#365C80"}}
                submitButtonColor="#CCC"
                submitButtonText="Submit"
-               hideSubmitButton
+               hideSubmitButton ={false}
                autoFocusInput= {false}
                tagBorderColor= {'#365C80'}
                tagRemoveIconColor ={'#365C80'}
+               fixedHeight= {true}
              />
              <ScrollView style= {{padding:10, height: 30}}>
              {
@@ -210,46 +211,54 @@ export default class UploadScreen extends React.Component {
            </View>
 </CardSection>
 <Card>
-<CardSection>
-<View style={{ width: 300,height: 40, backgroundColor: this.state.note,
-       borderWidth: 0}}>
+<View style={styles.cardContainerStyle}>
+<View style= {{flex: 1, flexDirection: 'row', textAlign: 'left', alignItems: 'center'}}>
+<Text style= {styles.labelstyle,{fontSize: 14}}>
+  Add Note
+</Text>
+</View>
+<View style= {{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center',textAlign: 'left'}}>
+      <Text style= {{fontSize: 10,}}>
+        Use for all images
+      </Text>
+  <View style= {{alignSelf: 'flex-end',  marginLeft: 20}}>
+      <Switch
+      onValueChange={ (value) => {
+        this.setState({ toggled: value });
+        notes[this.state.activeSlide] = this.state.note;
+      }}
+      style={{ transform: [{ scaleX: .5 }, { scaleY: .5 }] }}
+      value={ this.state.toggled }
+      thumbColor= '#000'
+      />
+  </View>
+    </View>
+  </View>
+<View style={styles.cardDectionStyle}>
+<View style={{ width: 300,height: 60, backgroundColor: this.state.note,
+       borderWidth: 1, borderColor: '#fff'}}>
     <TextInput
       multiline = {true}
-      numberOfLines = {2}
+      numberOfLines = {4}
       value = {this.state.note}
       onChangeText={this.handleTextInput.bind(this)}
       editable = {true}
       maxLength = {60}
-      placeholder= "ADD NOTE HERE"
+      placeholder= "Add your note here"
       spellCheck={true}
+      placeholderTextColor= {'#fff'}
       blurOnSubmit
       />
   </View>
-  </CardSection>
-  <CardSection>
-  <View style= {styles.containerStyle}>
-  <Switch
-  onValueChange={ (value) => {
-    this.setState({ toggled: value });
-    notes[this.state.activeSlide] = this.state.note;
-  }}
-  value={ this.state.toggled }
-  thumbColor= '#000'
-  />
-    <Text style= {styles.labelstyle}>
-      Use one note for all images
-    </Text>
-    </View>
-  </CardSection>
+  </View>
   </Card>
-  <View style={styles.container,{marginBottom: 10, alignSelf: 'stretch', position: 'relative',}}>
+<View style={styles.pf_container}>
+  <TouchableOpacity style={styles.pf_left} onPress={this.goBack}>
+    <Text style={{color: "#fff", fontSize: 15}}> Start Again </Text>
+  </TouchableOpacity>
     {this.renderButton()}
-    <TouchableOpacity style={{height: 100, alignItems:'stretch',}, styles.buttonStyle} onPress={this.goBack}>
-      <Text style={styles.textStyle}> Start Again </Text>
-    </TouchableOpacity>
     </View>
     </KeyboardAvoidingView>
-
       </View>
       </ScrollView>
       </SafeAreaView>
@@ -552,10 +561,29 @@ const styles = {
      alignItems: 'center',
      justifyContent: 'space-between',
   },
+  cardContainerStyle:  {
+    padding: 5,
+    backgroundColor :'#DDECF9',
+    flexDirection: 'row',
+    borderColor: '#ddd',
+    position: 'relative',
+     maxHeight:200 ,
+     zIndex: 6
+  },
   //HeaderBanner = hb
   hb_container: {
     height: '8%',
     backgroundColor: '#365C80',
+  },
+  cardDectionStyle:  {
+    borderBottomWidth: 1,
+    padding: 5,
+    backgroundColor :'#DDECF9',
+    flexDirection: 'row',
+    borderColor: '#ddd',
+    position: 'relative',
+    alignItems: 'center',
+     maxHeight:200 ,
   },
   hb_left: {
     position: 'absolute',
@@ -593,7 +621,8 @@ const styles = {
     padding: 10,
     width: 300,
     height: 240,
-    maxHeight:530,
+    maxHeight:250,
+    zIndex: 5,
   },
   buttonStyle: {
     alignSelf: 'stretch',
@@ -629,7 +658,40 @@ const styles = {
     height: 30,
     flex: 1,
     flexDirection:'row',
-    alignItems: 'center'
-  }
+    alignItems: 'flex-start'
+  },
+  // Picture Functions= pf
+  pf_container: {
+    height: '10%',
+    backgroundColor: '#fff',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  pf_left: {
+    height: '50%',
+    width: '45%',
+    position: 'absolute',
+    alignItems: 'center',
+    left: '2%',
+    backgroundColor: '#365C80',
+    textAlign: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    paddingLeft: '8%',
+    paddingRight: '8%',
+  },
+  pf_right: {
+    height: '50%',
+    width: '45%',
+    position: 'absolute',
+    alignItems: 'center',
+    right: '2%',
+    backgroundColor: '#365C80',
+    textAlign: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    borderRadius: 10,
+  },
 
 };

@@ -253,21 +253,24 @@ const styles = {
       },
       //Camera Settings = cs
       cs_container: {
-        height: '35%',
+        height: '40%',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        zIndex: 2
       },
       cs_text_container: {
         height: '18%',
         position: 'absolute',
-        bottom: '0%'
+        bottom: '0%',
+        left: '0%'
 
       },
       // Camera = c
       c_container: {
         height: '30%',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
+        zIndex: 1
       },
       c_text_container: {
         height: '20%',
