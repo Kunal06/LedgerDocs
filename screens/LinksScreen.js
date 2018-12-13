@@ -121,24 +121,24 @@ state = {
         </View>
 
         <TouchableOpacity style={styles.si_container} onPress={this.selectPhotoTapped.bind(this)}>
-        <Image source={require('../assets/images/Camera_icons/cam.png')} style= {{position: 'absolute',
-        top: '15%',width: wp("18%"), height: hp('7%')}} />
+        <Image source={require('../assets/images/Camera_icons/cam.png')} style= {{flex:2, position: 'absolute',
+        top: '15%'}} />
         <View style={styles.si_text_container}>
         <Text style= {{fontSize: 23, color: '#365C80'}}> Take Single Photo </Text>
         </View>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.cs_container} onPress={() => this.props.navigation.navigate('Camera',{Image: this.state.imageSource})}>
-        <Image source={require('../assets/images/Camera_icons/camera-borders.png')} style= {{position: 'absolute',
-        top: '10%',width: '18%', height: '50%'}} />
+        <Image source={require('../assets/images/Camera_icons/camera-borders.png')} style= {{flex:2, position: 'absolute',
+        top: '10%',}} />
         <View style={styles.cs_text_container}>
-        <Text style= {{fontSize: 23, color: '#365C80'}}> Scan Multiple Documents </Text>
+        <Text style= {{flex:1, fontSize: 23, color: '#365C80'}}> Scan Multiple Documents </Text>
         </View>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.c_container} onPress={this.pickMultiple.bind(this)}>
-        <Image source={require('../assets/images/Camera_icons/select_images.png')} style= {{position: 'absolute',
-        top: '10%',width: imageWidth, height: imageHeight}} />
+        <Image source={require('../assets/images/Camera_icons/select_images.png')} style= {{flex:2, position: 'absolute',
+        top: '10%',}} />
         <View style={styles.c_text_container}>
         <Text style= {{fontSize: 23, color: '#365C80'}}> Select Images </Text>
         </View>
@@ -187,7 +187,8 @@ const styles = StyleSheet.create({
   },
   //Single Image = si
   si_container: {
-     height: '20%',
+    flex:2,
+    height: '33%',
     backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
@@ -195,11 +196,11 @@ const styles = StyleSheet.create({
   si_text_container: {
     height: '30%',
     position: 'absolute',
-    bottom: '1%'
+    bottom: '5%'
   },
   //Camera Settings = cs
   cs_container: {
-    height: '20%',
+    flex:2,
     backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
@@ -207,12 +208,11 @@ const styles = StyleSheet.create({
   cs_text_container: {
     height: '22%',
     position: 'absolute',
-    bottom: '0%'
-
+    bottom: '15%'
   },
   // Camera = c
   c_container: {
-    height: '30%',
+    flex:2,
     backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',

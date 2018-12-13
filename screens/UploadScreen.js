@@ -119,7 +119,13 @@ export default class UploadScreen extends React.Component {
   render() {
     //const { selectedItems } = this.state;
     return (
+
       <SafeAreaView style={styles.loggedIncontainer}>
+      <KeyboardAvoidingView
+      style={{backgroundColor:'#fff', flex:1, color: "#365C80"}}
+      behavior="padding"
+      keyboardVerticalOffset={0}
+      enabled>
       <View style={styles.hb_container}>
         <View style={styles.hb_center}>
           <Text style={{ fontSize: 20, color: '#fff' }}> Upload Picture </Text>
@@ -128,14 +134,10 @@ export default class UploadScreen extends React.Component {
         <Icon name="arrow-round-back" style={{fontSize: 50, color: "#fff"}}></Icon>
         </TouchableOpacity>
       </View>
+      <View style={{flex:1}}>
       <ScrollView style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={styles.container}>
-      <KeyboardAvoidingView style={styles.container}
-      behavior="position"
-      enabled>
-        {/* Go ahead and delete ExpoLinksView and replace it with your
-           * content, we just wanted to provide you with some helpful links */}
-             <View  style={{width: 300, marginBottom: 20, marginTop: 10, alignItems: 'center' }}>
+             <View  style={{width: 300, marginBottom: 20, marginTop: 5, alignItems: 'center' }}>
              <Carousel
                 ref={(c) => { this._carousel = c; }}
                 data={this.state.images}
@@ -159,9 +161,11 @@ export default class UploadScreen extends React.Component {
               />
               { this.pagination }
               </View>
-             <View style={{width: 310, height: 70, alignItems: 'flex-start', marginLeft: '1.5%', backgroundColor: '#DDECF9'}}>
+              <View style={styles.componentscontainer}>
+
+             <View style={{flex: 1, height: 40, alignItems: 'center', backgroundColor: '#DDECF9'}}>
              <IOSPicker
-             style= {{width: 300, height:40, borderRadius:5,
+             style= {{width: 300, height:20, borderRadius:5,
              borderBottomWidth: 1,
              borderBottomColor:'#365C80'}}
              selectedValue={this.state.selectedValue}
@@ -174,7 +178,6 @@ export default class UploadScreen extends React.Component {
               }
               </IOSPicker>
              </View>
-             <CardSection style={{ maxHeight:550 }}>
            <View style={styles.multi}>
              <MultiSelect
                items={this.state.tags}
@@ -191,8 +194,8 @@ export default class UploadScreen extends React.Component {
                itemTextColor="#c7c4c4"
                displayKey="val"
                searchInputStyle={{ color: '#CCC', borderBottomWidth: 1, borderBottomColor: "#365C80"}}
-               submitButtonColor="#CCC"
-               submitButtonText="Submit"
+               submitButtonColor="#365C80"
+               submitButtonText="Done"
                hideSubmitButton ={false}
                autoFocusInput= {false}
                tagBorderColor= {'#365C80'}
@@ -209,59 +212,62 @@ export default class UploadScreen extends React.Component {
              }
              </ScrollView>
            </View>
-</CardSection>
-<Card>
-<View style={styles.cardContainerStyle}>
-<View style= {{flex: 1, flexDirection: 'row', textAlign: 'left', alignItems: 'center'}}>
-<Text style= {styles.labelstyle,{fontSize: 14}}>
-  Add Note
-</Text>
-</View>
-<View style= {{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center',textAlign: 'left'}}>
-      <Text style= {{fontSize: 10,}}>
-        Use for all images
-      </Text>
-  <View style= {{alignSelf: 'flex-end',  marginLeft: 20}}>
-      <Switch
-      onValueChange={ (value) => {
-        this.setState({ toggled: value });
-        notes[this.state.activeSlide] = this.state.note;
-      }}
-      style={{ transform: [{ scaleX: .5 }, { scaleY: .5 }] }}
-      value={ this.state.toggled }
-      thumbColor= '#000'
-      />
-  </View>
+    <Card>
+    <View style={styles.cardContainerStyle}>
+    <View style= {{flex: 1, flexDirection: 'row', textAlign: 'left', alignItems: 'center'}}>
+    <Text style= {styles.labelstyle,{fontSize: 14}}>
+      Add Note
+    </Text>
     </View>
-  </View>
-<View style={styles.cardDectionStyle}>
-<View style={{ width: 300,height: 60, backgroundColor: this.state.note,
-       borderWidth: 1, borderColor: '#fff'}}>
-    <TextInput
-      multiline = {true}
-      numberOfLines = {4}
-      value = {this.state.note}
-      onChangeText={this.handleTextInput.bind(this)}
-      editable = {true}
-      maxLength = {60}
-      placeholder= "Add your note here"
-      spellCheck={true}
-      placeholderTextColor= {'#fff'}
-      blurOnSubmit
-      />
-  </View>
-  </View>
-  </Card>
-<View style={styles.pf_container}>
-  <TouchableOpacity style={styles.pf_left} onPress={this.goBack}>
-    <Text style={{color: "#fff", fontSize: 15}}> Start Again </Text>
-  </TouchableOpacity>
-    {this.renderButton()}
-    </View>
-    </KeyboardAvoidingView>
+    <View style= {{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center',textAlign: 'left'}}>
+          <Text style= {{fontSize: 10,}}>
+            Use for all images
+          </Text>
+      <View style= {{alignSelf: 'flex-end',  marginLeft: 20}}>
+          <Switch
+          onValueChange={ (value) => {
+            this.setState({ toggled: value });
+            notes[this.state.activeSlide] = this.state.note;
+          }}
+          style={{ transform: [{ scaleX: .5 }, { scaleY: .5 }] }}
+          value={ this.state.toggled }
+          thumbColor= '#000'
+          />
+      </View>
+        </View>
+      </View>
+
+    <View>
+    <View style={{ width: 300,height: 60, backgroundColor: this.state.note,
+           borderWidth: 1, borderColor: '#fff'}}>
+        <TextInput
+          multiline = {true}
+          numberOfLines = {4}
+          value = {this.state.note}
+          onChangeText={this.handleTextInput.bind(this)}
+          editable = {true}
+          maxLength = {60}
+          placeholder= "Add your note here"
+          spellCheck={true}
+          placeholderTextColor= {'#fff'}
+          blurOnSubmit
+          />
+      </View>
+      </View>
+      </Card>
+      </View>
       </View>
       </ScrollView>
+      </View>
+      </KeyboardAvoidingView>
+      <View style={styles.bb_container}>
+        <TouchableOpacity style={styles.pf_left} onPress={this.goBack}>
+          <Text style={{color: "#fff", fontSize: 15}}> Start Again </Text>
+        </TouchableOpacity>
+          {this.renderButton()}
+      </View>
       </SafeAreaView>
+
 
     );
   }
@@ -524,6 +530,9 @@ export default class UploadScreen extends React.Component {
         console.error(error);
       });
     }
+    this.setState({
+      loading: false,
+    });
 
   }
   clear(){
@@ -557,6 +566,14 @@ const styles = {
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    flexDirection: 'column',
+     alignItems: 'center',
+     justifyContent: 'space-between',
+     zIndex: 2
+  },
+  componentscontainer: {
+    flex: 1,
+    backgroundColor: '#DDECF9',
     flexDirection: 'column',
      alignItems: 'center',
      justifyContent: 'space-between',
@@ -618,11 +635,12 @@ const styles = {
   multi: {
     flex: 1,
     backgroundColor: '#DDECF9',
-    padding: 10,
+    marginBottom: 5,
     width: 300,
-    height: 240,
-    maxHeight:250,
+    height: 200,
+    maxHeight: 200,
     zIndex: 5,
+    paddingTop: 10
   },
   buttonStyle: {
     alignSelf: 'stretch',
@@ -662,14 +680,15 @@ const styles = {
   },
   // Picture Functions= pf
   pf_container: {
-    height: '10%',
+    height: '15%',
     backgroundColor: '#fff',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    zIndex: 9
   },
   pf_left: {
-    height: '50%',
+    height: '70%',
     width: '45%',
     position: 'absolute',
     alignItems: 'center',
@@ -682,7 +701,7 @@ const styles = {
     paddingRight: '8%',
   },
   pf_right: {
-    height: '50%',
+    height: '70%',
     width: '45%',
     position: 'absolute',
     alignItems: 'center',
@@ -692,6 +711,30 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'center',
     borderRadius: 10,
+  },
+  bb_container: {
+    height: '6%',
+    backgroundColor: '#fff',
+  },
+  bb_left: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    top: '3%',
+    bottom: '3%',
+    left: '5%',
+    backgroundColor: '#365C80',
+    borderRadius: 25
+  },
+  bb_right: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    top: '3%',
+    bottom: '3%',
+    right: '5%',
+    backgroundColor: '#365C80',
+    borderRadius: 10
   },
 
 };
