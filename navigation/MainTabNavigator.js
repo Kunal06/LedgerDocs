@@ -16,16 +16,16 @@ const HomeStack = createStackNavigator({
 });
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
+  tabBarLabel: ' ',
   tabBarIcon: ({ focused }) => (
     focused ? <Image
           source={require('../assets/images/Camera_icons/bell-notification-white.png')}
-          style={{height: '80%', width: '18%'}}
+          style={{flex:1}}
         />
         :
         <Image
           source={require('../assets/images/Camera_icons/bell-notification.png')}
-          style={{height: '80%', width: '18%'}}
+          style={{flex:1}}
         />
   ),
 };
@@ -33,7 +33,7 @@ HomeStack.navigationOptions = {
 const LinksStack = createStackNavigator({
   Links: {
     screen: LinksScreen,
-    navigationOptions: { tabBarLabel: 'Links'},
+    navigationOptions: { tabBarLabel: ' '},
 },
   Camera: CameraScreen,
   Upload: UploadScreen,
@@ -44,15 +44,15 @@ const LinksStack = createStackNavigator({
 
 LinksStack.navigationOptions = ({ navigation }) => {
   let { routeName } = navigation.state.routes[navigation.state.index];
-  let navigationOptions = {tabBarLabel: 'Camera', tabBarIcon: ({ focused }) => (
+  let navigationOptions = {tabBarLabel: ' ', tabBarIcon: ({ focused }) => (
     focused ? <Image
           source={require('../assets/images/Camera_icons/camera-white.png')}
-          style={{height: '70%', width: '20%'}}
+          style={{flex:1}}
         />
         :
         <Image
           source={require('../assets/images/Camera_icons/camera.png')}
-          style={{height: '70%', width: '20%'}}
+          style={{flex:1}}
         />
   ),};
 
@@ -70,16 +70,16 @@ const SettingsStack = createStackNavigator({
 });
 
 SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
+  tabBarLabel: ' ',
   tabBarIcon: ({ focused }) => (
     focused ? <Image
           source={require('../assets/images/Camera_icons/setting-icon-white.png')}
-          style={{height: '70%', width: '20%'}}
+          style={{flex:1}}
         />
         :
         <Image
           source={require('../assets/images/Camera_icons/setting-icon.png')}
-          style={{height: '70%', width: '20%'}}
+          style={{flex:1}}
         />
   ),
 };
@@ -91,6 +91,6 @@ export default createBottomTabNavigator({
 },
 {
   initialRouteName: 'LinksStack',
-  tabBarOptions: {style: {backgroundColor: '#365C80', }},
+  tabBarOptions: {style: {backgroundColor: '#365C80', paddingTop:'2%'}},
 }
 );

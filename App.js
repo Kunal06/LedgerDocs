@@ -18,7 +18,11 @@ import { createStackNavigator, createSwitchNavigator } from 'react-navigation';
 export default class App extends React.Component {
 
   componentDidMount(){
-    SplashScreen.hide();
+    this.timeoutHandle = setTimeout(()=>{
+              // Add your logic for the transition
+              SplashScreen.hide();
+         }, 1000);
+
   }
 
 render(){

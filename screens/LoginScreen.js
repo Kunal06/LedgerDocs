@@ -254,6 +254,7 @@ const styles = {
       //Camera Settings = cs
       cs_container: {
         height: '40%',
+        padding: 10,
         justifyContent: 'center',
         alignItems: 'center',
         zIndex: 2

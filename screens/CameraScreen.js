@@ -246,7 +246,7 @@ renderDetectionTypeText() {
             (this.state.images.length > 0) ?
             <View style={styles.cf_left_imagebox}>
               <View style={styles.cf_left_imagecount}>
-                <Text style={{color: "#365C80"}}> {this.state.images.length} </Text>
+                <Text style={{color: "#F80000"}}> {this.state.images.length} </Text>
               </View>
               <View  style={{position: 'absolute',top:0 , justifyContent: 'center'}}>
               <Carousel
@@ -269,7 +269,7 @@ renderDetectionTypeText() {
         </View>
         <View style={styles.pf_container}>
           <TouchableOpacity style={styles.pf_left} onPress={this.pickMultiple.bind(this)}>
-            <Text style={{color: "#fff", fontSize: 15}}> Select from Library </Text>
+            <Text style={{color: "#fff", fontSize: 13}}> Select from Library </Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.pf_right} onPress={this.completeScanning.bind(this)}>
             <Text style={{color: "#fff"}}> Upload </Text>
@@ -419,6 +419,7 @@ const styles =  {
     height: '80%',
     width: '75%',
     left: 0,
+    top: '10%',
     zIndex: 0
   },
   cf_left_imagecount: {
@@ -471,7 +472,7 @@ const styles =  {
     alignItems: 'center',
   },
   pf_left: {
-    height: '50%',
+    height: '60%',
     width: '45%',
     position: 'absolute',
     alignItems: 'center',
@@ -484,7 +485,7 @@ const styles =  {
     paddingRight: '8%',
   },
   pf_right: {
-    height: '50%',
+    height: '60%',
     width: '45%',
     position: 'absolute',
     alignItems: 'center',

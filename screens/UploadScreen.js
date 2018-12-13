@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {SafeAreaView, Picker, Switch, KeyboardAvoidingView, ActivityIndicator,AsyncStorage,PixelRatio, Alert, TouchableOpacity,ScrollView, StyleSheet, Text, View, Image, TextInput, PickerItemIOS } from 'react-native';
-import { Header,Input, Button, Spinner, Card, CardSection} from '../components/common';
+import { Header,Input, Button, Spinner, Card, CardSection, TextArea} from '../components/common';
 import Icon from 'react-native-ionicons';
 import IOSPicker from 'react-native-ios-picker';
 import MultiSelect from 'react-native-multiple-select';
@@ -75,8 +75,8 @@ export default class UploadScreen extends React.Component {
   // }
   _renderItem ({item, index}) {
         return (
-          <View style={styles.slide, {flex:1, width: 200, height: 200, alignItems: 'center', borderWidth: 1, borderColor: '#000'}}>
-          <Image style={styles.avatar, {width: 200, height: 200 }} source={item} />
+          <View style={styles.slide, {flex:1, width: 200, height: 180, alignItems: 'center',}}>
+          <Image style={styles.avatar, {width: 200, height: 180 }} source={item} />
       </View>
         );
     }
@@ -91,7 +91,7 @@ export default class UploadScreen extends React.Component {
                   width: 10,
                   height: 10,
                   borderRadius: 5,
-                  marginHorizontal: 8,
+                  marginHorizontal: 0,
                   backgroundColor: 'rgba(0, 0, 0, 0.92)'
               }}
               inactiveDotStyle={{
@@ -137,7 +137,7 @@ export default class UploadScreen extends React.Component {
       <View style={{flex:1}}>
       <ScrollView style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={styles.container}>
-             <View  style={{width: 300, marginBottom: 20, marginTop: 5, alignItems: 'center' }}>
+             <View  style={{width: 300, marginBottom: 0, marginTop: 5, alignItems: 'center', height: 220 }}>
              <Carousel
                 ref={(c) => { this._carousel = c; }}
                 data={this.state.images}
@@ -163,11 +163,10 @@ export default class UploadScreen extends React.Component {
               </View>
               <View style={styles.componentscontainer}>
 
-             <View style={{flex: 1, height: 40, alignItems: 'center', backgroundColor: '#DDECF9'}}>
+             <View style={{flex: 1, height: 40, alignItems: 'center', backgroundColor: '#fff',marginBottom: 5}}>
              <IOSPicker
-             style= {{width: 300, height:20, borderRadius:5,
-             borderBottomWidth: 1,
-             borderBottomColor:'#365C80'}}
+             style= {{width: 300, height:20, borderRadius:8,
+             borderWidth: 1, borderColor: '#365C80'}}
              selectedValue={this.state.selectedValue}
              mode="modal"
              onValueChange={(d, i)=> this.change(d, i)}>
@@ -185,7 +184,7 @@ export default class UploadScreen extends React.Component {
                ref={(component) => { this.multiSelect = component }}
                onSelectedItemsChange={this.onSelectedItemsChange.bind(this)}
                selectedItems={this.state.selectedItems}
-               selectText="Select Tags "
+               selectText=" Select Tags "
                searchInputPlaceholderText="Search Tags..."
                onChangeInput={ (text)=> console.log(text)}
                tagTextColor="#000"
@@ -193,8 +192,8 @@ export default class UploadScreen extends React.Component {
                selectedItemIconColor="#365C80"
                itemTextColor="#c7c4c4"
                displayKey="val"
-               searchInputStyle={{ color: '#CCC', borderBottomWidth: 1, borderBottomColor: "#365C80"}}
-               submitButtonColor="#365C80"
+               searchInputStyle={{ color: '#CCC', borderBottomWidth: 1, borderBottomColor: "#365C80", }}
+               submitButtonColor="#89B0D6"
                submitButtonText="Done"
                hideSubmitButton ={false}
                autoFocusInput= {false}
@@ -202,7 +201,7 @@ export default class UploadScreen extends React.Component {
                tagRemoveIconColor ={'#365C80'}
                fixedHeight= {true}
              />
-             <ScrollView style= {{padding:10, height: 30}}>
+             <ScrollView style= {{padding:10, height: 10}}>
              {
                this.multiselect
                ?
@@ -239,7 +238,7 @@ export default class UploadScreen extends React.Component {
 
     <View>
     <View style={{ width: 300,height: 60, backgroundColor: this.state.note,
-           borderWidth: 1, borderColor: '#fff'}}>
+           borderWidth: 1, borderColor: '#365C80', borderRadius: 8}}>
         <TextInput
           multiline = {true}
           numberOfLines = {4}
@@ -573,14 +572,14 @@ const styles = {
   },
   componentscontainer: {
     flex: 1,
-    backgroundColor: '#DDECF9',
+    backgroundColor: '#fff',
     flexDirection: 'column',
      alignItems: 'center',
      justifyContent: 'space-between',
   },
   cardContainerStyle:  {
     padding: 5,
-    backgroundColor :'#DDECF9',
+    backgroundColor :'#fff',
     flexDirection: 'row',
     borderColor: '#ddd',
     position: 'relative',
@@ -595,7 +594,7 @@ const styles = {
   cardDectionStyle:  {
     borderBottomWidth: 1,
     padding: 5,
-    backgroundColor :'#DDECF9',
+    backgroundColor :'#fff',
     flexDirection: 'row',
     borderColor: '#ddd',
     position: 'relative',
@@ -634,13 +633,14 @@ const styles = {
   },
   multi: {
     flex: 1,
-    backgroundColor: '#DDECF9',
+    backgroundColor: '#fff',
     marginBottom: 5,
     width: 300,
-    height: 200,
+    height: 150,
     maxHeight: 200,
     zIndex: 5,
-    paddingTop: 10
+    paddingTop: 10,
+    borderWidth: 1, borderColor: "#365C80",borderRadius:8
   },
   buttonStyle: {
     alignSelf: 'stretch',
@@ -678,6 +678,28 @@ const styles = {
     flexDirection:'row',
     alignItems: 'flex-start'
   },
+  inputStyle:{
+    flex: 1,
+    flexDirection:'column',
+    color: "#365C80",
+    fontSize:18,
+    backgroundColor: '#fff',
+    width: 300,
+    height: 60,
+    borderRadius: 8
+  },
+  inputFieldContainer:  {
+    padding: 5,
+    backgroundColor :'#DDECF9',
+    position: 'relative',
+    alignItems: 'flex-start',
+    height: 100,
+     maxHeight:500 ,
+     paddingLeft:8,
+     flexDirection: 'row',
+     color: "#365C80"
+
+  },
   // Picture Functions= pf
   pf_container: {
     height: '15%',
@@ -713,15 +735,15 @@ const styles = {
     borderRadius: 10,
   },
   bb_container: {
-    height: '6%',
+    height: '7%',
     backgroundColor: '#fff',
   },
   bb_left: {
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
-    top: '3%',
-    bottom: '3%',
+    top: '5%',
+    bottom:0,
     left: '5%',
     backgroundColor: '#365C80',
     borderRadius: 25
@@ -730,8 +752,8 @@ const styles = {
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
-    top: '3%',
-    bottom: '3%',
+    top: '5%',
+    bottom: 0,
     right: '5%',
     backgroundColor: '#365C80',
     borderRadius: 10

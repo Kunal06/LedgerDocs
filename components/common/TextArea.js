@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextInput,Text, View } from 'react-native';
 
-const InputVertical = ({label,value,onChangeText,placeholder,secureTextEntry}) => {
+const TextArea = ({label,value,onChangeText,placeholder,secureTextEntry}) => {
   const {inputStyle, labelstyle,containerStyle} = styles;
 return (
 
@@ -10,10 +10,12 @@ return (
       {label}
     </Text>
     <TextInput
+      multiline = {true}
+      numberOfLines = {4}
+      spellCheck={true}
       secureTextEntry= {secureTextEntry}
       placeholder= {placeholder}
       autoCorrect={false}
-      autoCapitalize = 'none'
       style= {inputStyle}
       value = {value}
       onChangeText = {onChangeText}
@@ -52,7 +54,7 @@ const styles ={
 
 }
 
-export { InputVertical };
+export { TextArea };
 /*
 flex is like a ration of space allocated in a Component
 */

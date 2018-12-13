@@ -6,3 +6,4 @@ export * from './Input';
 export * from './Spinner';
 export * from './Futch';
 export * from './InputVertical';
+export * from './TextArea';

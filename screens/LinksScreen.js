@@ -115,9 +115,7 @@ state = {
           <View style={styles.hb_center}>
             <Text style={{ fontSize: 23, color: '#fff' }}> Take Picture </Text>
           </View>
-          <TouchableOpacity style={styles.hb_left} onPress= {() => this.props.navigation.navigate('Links')}>
-          <Icon name="arrow-round-back" style={{fontSize: 50, color: "#fff"}}></Icon>
-          </TouchableOpacity>
+
         </View>
 
         <TouchableOpacity style={styles.si_container} onPress={this.selectPhotoTapped.bind(this)}>
@@ -196,7 +194,7 @@ const styles = StyleSheet.create({
   si_text_container: {
     height: '30%',
     position: 'absolute',
-    bottom: '5%'
+    bottom: '10%'
   },
   //Camera Settings = cs
   cs_container: {
@@ -208,7 +206,7 @@ const styles = StyleSheet.create({
   cs_text_container: {
     height: '22%',
     position: 'absolute',
-    bottom: '15%'
+    bottom: '20%'
   },
   // Camera = c
   c_container: {
@@ -220,6 +218,6 @@ const styles = StyleSheet.create({
   c_text_container: {
     height: '20%',
     position: 'absolute',
-    bottom: '20%'
+    bottom: '25%'
   }
 });
