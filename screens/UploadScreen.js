@@ -5,6 +5,7 @@ import Icon from 'react-native-ionicons';
 import IOSPicker from 'react-native-ios-picker';
 import MultiSelect from 'react-native-multiple-select';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+import InputScrollView from 'react-native-input-scroll-view';
 
 const serverURL = "https://migration.ledgersonline.com/index.php/Iphone/";
 import FormData from 'FormData';
@@ -66,6 +67,9 @@ export default class UploadScreen extends React.Component {
     console.log("Component DID MOunt ENtered");
     this.loadTags.bind(this);
   }
+  scrollToEnd() {
+    this.scrollView.scrollToEnd();
+  }
   // shouldComponentUpdate(nextprops, prevprojectId){
   //   if (this.state.prevprojectId !== this.state.projectId) {
   //       console.log("Enter update projectID - - - " + this.state.projectId);
@@ -126,138 +130,150 @@ export default class UploadScreen extends React.Component {
       behavior="padding"
       keyboardVerticalOffset={0}
       enabled>
-      <View style={styles.hb_container}>
-        <View style={styles.hb_center}>
-          <Text style={{ fontSize: 20, color: '#fff' }}> Upload Picture </Text>
-        </View>
-        <TouchableOpacity style={styles.hb_left} onPress= {() => this.props.navigation.navigate('Camera')}>
-        <Icon name="arrow-round-back" style={{fontSize: 50, color: "#fff"}}></Icon>
-        </TouchableOpacity>
-      </View>
-      <View style={{flex:1}}>
-      <ScrollView style={{flex: 1, backgroundColor: '#fff'}}>
-      <View style={styles.container}>
-             <View  style={{width: 300, marginBottom: 0, marginTop: 5, alignItems: 'center', height: 220 }}>
-             <Carousel
-                ref={(c) => { this._carousel = c; }}
-                data={this.state.images}
-                renderItem={this._renderItem}
-                sliderWidth={350}
-                itemWidth={200}
-                layout= 'default'
-                removeClippedSubviews={false}
-                onSnapToItem= {(index) =>{
-                  console.log("Activeslide - "+ index);
-                  console.log("Note - "+ notes);
-                  if(!this.state.toggled){
-                    notes[this.state.activeSlide] = this.state.note;
-                    this.setState({ activeSlide: index, note: notes[index] });
-                }
-                else{
-                  this.setState({ activeSlide: index });
-                }
-                }
-                }
-              />
-              { this.pagination }
-              </View>
-              <View style={styles.componentscontainer}>
 
-             <View style={{flex: 1, height: 40, alignItems: 'center', backgroundColor: '#fff',marginBottom: 5}}>
-             <IOSPicker
-             style= {{width: 300, height:20, borderRadius:8,
-             borderWidth: 1, borderColor: '#365C80'}}
-             selectedValue={this.state.selectedValue}
-             mode="modal"
-             onValueChange={(d, i)=> this.change(d, i)}>
-             {
-                projects.map((item, index)=>
-                  <Picker.Item key={index} label={item.val} value={item.val} />
-                )
-              }
-              </IOSPicker>
-             </View>
-           <View style={styles.multi}>
-             <MultiSelect
-               items={this.state.tags}
-               uniqueKey="id"
-               ref={(component) => { this.multiSelect = component }}
-               onSelectedItemsChange={this.onSelectedItemsChange.bind(this)}
-               selectedItems={this.state.selectedItems}
-               selectText=" Select Tags "
-               searchInputPlaceholderText="Search Tags..."
-               onChangeInput={ (text)=> console.log(text)}
-               tagTextColor="#000"
-               selectedItemTextColor="#365C80"
-               selectedItemIconColor="#365C80"
-               itemTextColor="#c7c4c4"
-               displayKey="val"
-               searchInputStyle={{ color: '#CCC', borderBottomWidth: 1, borderBottomColor: "#365C80", }}
-               submitButtonColor="#89B0D6"
-               submitButtonText="Done"
-               hideSubmitButton ={false}
-               autoFocusInput= {false}
-               tagBorderColor= {'#365C80'}
-               tagRemoveIconColor ={'#365C80'}
-               fixedHeight= {true}
-             />
-             <ScrollView style= {{padding:10, height: 10}}>
-             {
-               this.multiselect
-               ?
-               this.multiSelect.getSelectedItemsExt(this.state.selectedItems)
-               :
-               null
-             }
-             </ScrollView>
-           </View>
-    <Card>
-    <View style={styles.cardContainerStyle}>
-    <View style= {{flex: 1, flexDirection: 'row', textAlign: 'left', alignItems: 'center'}}>
-    <Text style= {styles.labelstyle,{fontSize: 14}}>
-      Add Note
-    </Text>
-    </View>
-    <View style= {{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center',textAlign: 'left'}}>
-          <Text style= {{fontSize: 10,}}>
-            Use for all images
-          </Text>
-      <View style= {{alignSelf: 'flex-end',  marginLeft: 20}}>
-          <Switch
-          onValueChange={ (value) => {
-            this.setState({ toggled: value });
-            notes[this.state.activeSlide] = this.state.note;
-          }}
-          style={{ transform: [{ scaleX: .5 }, { scaleY: .5 }] }}
-          value={ this.state.toggled }
-          thumbColor= '#000'
-          />
-      </View>
-        </View>
-      </View>
 
-    <View>
-    <View style={{ width: 300,height: 60, backgroundColor: this.state.note,
-           borderWidth: 1, borderColor: '#365C80', borderRadius: 8}}>
-        <TextInput
-          multiline = {true}
-          numberOfLines = {4}
-          value = {this.state.note}
-          onChangeText={this.handleTextInput.bind(this)}
-          editable = {true}
-          maxLength = {60}
-          placeholder= "Add your note here"
-          spellCheck={true}
-          placeholderTextColor= {'#fff'}
-          blurOnSubmit
-          />
-      </View>
-      </View>
-      </Card>
-      </View>
-      </View>
-      </ScrollView>
-      </View>
+          <View style={styles.hb_container}>
+            <View style={styles.hb_center}>
+              <Text style={{ fontSize: 20, color: '#fff' }}> Upload Picture </Text>
+            </View>
+            <TouchableOpacity style={styles.hb_left} onPress= {() => this.props.navigation.navigate('Camera')}>
+            <Icon name="arrow-round-back" style={{fontSize: 50, color: "#fff"}}></Icon>
+            </TouchableOpacity>
+        </View>
+
+
+          <ScrollView >
+          <InputScrollView
+          ref={(scrollView) => { this.scrollView = scrollView }}>
+
+            <View style={styles.container}>
+
+
+                 <View  style={{width: 300, marginBottom: 0, marginTop: 5, alignItems: 'center', height: 220 }}>
+                   <Carousel
+                      ref={(c) => { this._carousel = c; }}
+                      data={this.state.images}
+                      renderItem={this._renderItem}
+                      sliderWidth={350}
+                      itemWidth={200}
+                      layout= 'default'
+                      removeClippedSubviews={false}
+                      onSnapToItem= {(index) =>{
+                        console.log("Activeslide - "+ index);
+                        console.log("Note - "+ notes);
+                        if(!this.state.toggled){
+                          notes[this.state.activeSlide] = this.state.note;
+                          this.setState({ activeSlide: index, note: notes[index] });
+                      }
+                      else{
+                        this.setState({ activeSlide: index });
+                      }
+                      }
+                      }
+                    />
+                    { this.pagination }
+                  </View>
+
+
+
+                 <View style={styles.componentscontainer}>
+
+                    <View style={{flex: 1, height: 40, alignItems: 'center', backgroundColor: '#fff',marginBottom: 5}}>
+                     <IOSPicker
+                     style= {{width: 300, height:20, borderRadius:8,
+                     borderWidth: 1, borderColor: '#365C80'}}
+                     selectedValue={this.state.selectedValue}
+                     mode="modal"
+                     onValueChange={(d, i)=> this.change(d, i)}>
+                     {
+                        projects.map((item, index)=>
+                          <Picker.Item key={index} label={item.val} value={item.val} />
+                        )
+                      }
+                      </IOSPicker>
+                   </View>
+
+                   <View style={styles.multi}>
+                       <MultiSelect
+                         items={this.state.tags}
+                         uniqueKey="id"
+                         ref={(component) => { this.multiSelect = component }}
+                         onSelectedItemsChange={this.onSelectedItemsChange.bind(this)}
+                         selectedItems={this.state.selectedItems}
+                         selectText=" Select Tags "
+                         searchInputPlaceholderText="Search Tags..."
+                         onChangeInput={ (text)=> console.log(text)}
+                         tagTextColor="#000"
+                         selectedItemTextColor="#365C80"
+                         selectedItemIconColor="#365C80"
+                         itemTextColor="#c7c4c4"
+                         displayKey="val"
+                         searchInputStyle={{ color: '#CCC', borderBottomWidth: 1, borderBottomColor: "#365C80", }}
+                         submitButtonColor="#89B0D6"
+                         submitButtonText="Done"
+                         hideSubmitButton ={false}
+                         autoFocusInput= {false}
+                         tagBorderColor= {'#365C80'}
+                         tagRemoveIconColor ={'#365C80'}
+                         fixedHeight= {true}
+                       />
+                       <View style= {{padding:10, height: 10}}>
+                       {
+                         this.multiselect
+                         ?
+                         this.multiSelect.getSelectedItemsExt(this.state.selectedItems)
+                         :
+                         null
+                       }
+                       </View>
+                  </View>
+
+
+                  <Card>
+                  <View style={styles.cardContainerStyle}>
+                  <View style= {{flex: 1, flexDirection: 'row', textAlign: 'left', alignItems: 'center'}}>
+                  <Text style= {styles.labelstyle,{fontSize: 14}}>
+                    Add Note
+                  </Text>
+                  </View>
+                  <View style= {{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center',textAlign: 'left'}}>
+                        <Text style= {{fontSize: 10,}}>
+                          Use for all images
+                        </Text>
+                    <View style= {{alignSelf: 'flex-end',  marginLeft: 20}}>
+                        <Switch
+                        onValueChange={ (value) => {
+                          this.setState({ toggled: value });
+                          notes[this.state.activeSlide] = this.state.note;
+                        }}
+                        style={{ transform: [{ scaleX: .5 }, { scaleY: .5 }] }}
+                        value={ this.state.toggled }
+                        thumbColor= '#000'
+                        />
+                    </View>
+                      </View>
+                    </View>
+
+                  <View style={{ width: 300,height: 60, backgroundColor: this.state.note,
+                         borderWidth: 1, borderColor: '#365C80', borderRadius: 8, marginBottom: 10}}>
+                      <TextInput
+                        multiline = {true}
+                        numberOfLines = {4}
+                        value = {this.state.note}
+                        onChangeText={this.handleTextInput.bind(this)}
+                        editable = {true}
+                        maxLength = {60}
+                        placeholder= "Add your note here"
+                        spellCheck={true}
+                        placeholderTextColor= {'#365C80'}
+                        blurOnSubmit
+                        />
+                    </View>
+                    </Card>
+          </View>
+          </View>
+          </InputScrollView>
+          </ScrollView>
       </KeyboardAvoidingView>
       <View style={styles.bb_container}>
         <TouchableOpacity style={styles.pf_left} onPress={this.goBack}>
@@ -281,6 +297,7 @@ export default class UploadScreen extends React.Component {
   change(d, i) {
     console.log("d val - " + d);
     console.log("i Value - " + i);
+    this.scrollView.scrollToEnd();
     this.setState({
       selectedValue: d,
       projectId: projectKeys[i],
@@ -636,10 +653,10 @@ const styles = {
     backgroundColor: '#fff',
     marginBottom: 5,
     width: 300,
-    height: 150,
-    maxHeight: 200,
+    height: 235,
+    maxHeight: 235,
     zIndex: 5,
-    paddingTop: 10,
+    paddingTop: 5,
     borderWidth: 1, borderColor: "#365C80",borderRadius:8
   },
   buttonStyle: {
