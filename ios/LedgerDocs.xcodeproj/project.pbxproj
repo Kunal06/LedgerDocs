@@ -858,7 +858,7 @@
 								enabled = 0;
 							};
 							com.apple.BackgroundModes = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -1551,7 +1551,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.LedgerDocs66;
 				PRODUCT_NAME = LedgerDocs;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1576,7 +1576,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.LedgerDocs66;
 				PRODUCT_NAME = LedgerDocs;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1611,7 +1611,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.LedgerDocs-tvOSios";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.LedgerDocs-tvOSi0978";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -1648,7 +1648,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.LedgerDocs-tvOSios";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.LedgerDocs-tvOSi0978";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;

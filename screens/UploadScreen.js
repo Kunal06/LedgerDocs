@@ -17,7 +17,6 @@ var tagValues=["Select Tags"];
 var tagKeys=[9999999];
 var projects=[];
 var notes = [];
-const data = [{name: 'SanPyaeLin', code: '22'},{name: 'Jhon', code: '1'},{name: 'Marry', code: '2'}]
 
 //let tags=[];
 export default class UploadScreen extends React.Component {
@@ -102,11 +101,6 @@ export default class UploadScreen extends React.Component {
     return (
 
       <SafeAreaView style={styles.loggedIncontainer}>
-      <KeyboardAvoidingView
-      style={{backgroundColor:'#fff', flex:1, color: "#365C80"}}
-      behavior="padding"
-      keyboardVerticalOffset={0}
-      enabled>
 
 
           <View style={styles.hb_container}>
@@ -119,9 +113,11 @@ export default class UploadScreen extends React.Component {
         </View>
 
 
-          <ScrollView >
+          <ScrollView  style={{backgroundColor:'#fff', flex:1, color: "#365C80"}}>
           <InputScrollView
-          ref={(scrollView) => { this.scrollView = scrollView }}>
+          ref={(scrollView) => { this.scrollView = scrollView }}
+          keyboardOffset ={0}
+          >
 
             <View style={styles.container}>
 
@@ -229,7 +225,7 @@ export default class UploadScreen extends React.Component {
                       </View>
                     </View>
 
-                  <View style={{ width: 300,height: 60, backgroundColor: this.state.note,
+                  <View style={{ width: 300,height: 60,
                          borderWidth: 1, borderColor: '#365C80', borderRadius: 8, marginBottom: 10}}>
                       <TextInput
                         multiline = {true}
@@ -249,7 +245,6 @@ export default class UploadScreen extends React.Component {
           </View>
           </InputScrollView>
           </ScrollView>
-      </KeyboardAvoidingView>
       <View style={styles.bb_container}>
         <TouchableOpacity style={styles.pf_left} onPress={this.goBack}>
           <Text style={{color: "#fff", fontSize: 15}}> Start Again </Text>
