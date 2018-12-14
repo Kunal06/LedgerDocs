@@ -23,7 +23,6 @@ const data = [{name: 'SanPyaeLin', code: '22'},{name: 'Jhon', code: '1'},{name: 
 export default class UploadScreen extends React.Component {
     state = { email: '', password: '', note: ''};
   constructor(props){
-    console.log("UPLOAD SCREEN");
     super(props);
     this._bootstrapAsync();
     this.state = {
@@ -39,23 +38,13 @@ export default class UploadScreen extends React.Component {
       //notes: ['a','b','c'],
       toggled: false,
     };
-    // if(this.state.image){
-    //   this.setState({
-    //     images: [...this.state.images, this.state.image],
-    //   })
-    // }
-    console.log("New array images - " + this.state.images.length);
-    //console.log("New array images 0- " + this.state.images[0].uri);
   }
   static navigationOptions = {
     header: null,
   };
   _bootstrapAsync = async () => {
     const currentUser = JSON.parse (await AsyncStorage.getItem('User'));
-     //console.log(currentUser.LoggedIn);
-     console.log(currentUser.user_name);
-     console.log(currentUser.password);
-     console.log(currentUser.LoggedIn);
+
     this.setState({
       email: currentUser.user_name,
       password: currentUser.password,
@@ -64,19 +53,8 @@ export default class UploadScreen extends React.Component {
     this.loadProjects();
   };
   componentDidMount() {
-    console.log("Component DID MOunt ENtered");
     this.loadTags.bind(this);
   }
-  scrollToEnd() {
-    this.scrollView.scrollToEnd();
-  }
-  // shouldComponentUpdate(nextprops, prevprojectId){
-  //   if (this.state.prevprojectId !== this.state.projectId) {
-  //       console.log("Enter update projectID - - - " + this.state.projectId);
-  //       return true
-  //   }
-  //   return false
-  // }
   _renderItem ({item, index}) {
         return (
           <View style={styles.slide, {flex:1, width: 200, height: 180, alignItems: 'center',}}>
@@ -121,7 +99,6 @@ export default class UploadScreen extends React.Component {
       );
     }
   render() {
-    //const { selectedItems } = this.state;
     return (
 
       <SafeAreaView style={styles.loggedIncontainer}>
@@ -159,8 +136,6 @@ export default class UploadScreen extends React.Component {
                       layout= 'default'
                       removeClippedSubviews={false}
                       onSnapToItem= {(index) =>{
-                        console.log("Activeslide - "+ index);
-                        console.log("Note - "+ notes);
                         if(!this.state.toggled){
                           notes[this.state.activeSlide] = this.state.note;
                           this.setState({ activeSlide: index, note: notes[index] });
@@ -291,13 +266,8 @@ export default class UploadScreen extends React.Component {
     if(!this.state.toggled){
       notes[this.state.activeSlide] = this.state.note;
   }
-    //this.state.notes[this.state.activeSlide] = this.state.note;
-    //this.forceUpdate()
   }
   change(d, i) {
-    console.log("d val - " + d);
-    console.log("i Value - " + i);
-    this.scrollView.scrollToEnd();
     this.setState({
       selectedValue: d,
       projectId: projectKeys[i],
@@ -305,16 +275,12 @@ export default class UploadScreen extends React.Component {
    this.loadTags.bind(this)
 );
 
-    console.log("project ID- " + this.state.projectId);
-    console.log("Selected Value - " + this.state.selectedValue);
   }
   onSelectedItemsChange = selectedItems => {
     this.setState({ selectedItems });
   };
   goBack = async () => {
-    //const userToken = await AsyncStorage.setItem('UploadReady', 'false');
     this.clear();
-    //console.log(userToken);
     this.props.navigation.navigate('Links');
   };
 
@@ -322,8 +288,6 @@ export default class UploadScreen extends React.Component {
     const data = new FormData();
     data.append("user_name",  this.state.email);
     data.append("password",  this.state.password);
-    console.log(this.state.email);
-    console.log(this.state.password);
     fetch(serverURL+'getProjects', {
       method: 'POST',
       headers: {
@@ -334,12 +298,9 @@ export default class UploadScreen extends React.Component {
     }).then((response) => response.text())
     .then((responseJson) => {
       // Showing response message coming from server after inserting records.
-      //console.log("RESPONSE JSON - " +responseJson);
       var xml = new XMLParser().parseFromString(responseJson);    // Assume xmlText contains the example XML
-    //  console.log(xml);
-      // console.log(xml.getElementsByTagName('String')[11].value);
+
       let i =4;
-     //console.log(xml.getElementsByTagName('key'));
      let projectsObjKey= xml.getElementsByTagName('key');
       let projectsObj= xml.getElementsByTagName('String');
 
@@ -354,7 +315,6 @@ export default class UploadScreen extends React.Component {
         },
       this.loadTags()
     );
-        console.log(this.state.selectedValue);
       }
       else{
         this.setState({
@@ -368,40 +328,25 @@ export default class UploadScreen extends React.Component {
       for(let i = 4; i < projectsObj.length ; i++ ){
         projectKeys.push(projectsObjKey[i].value);
         projectValues.push(projectsObj[i].value);
-      //  console.log(projectsObjKey[i].value);
         let keyvalitem = {
           id: projectsObjKey[i].value,
           val: projectsObj[i].value
         }
         projects.push(keyvalitem);
       }
-      //console.log(projects[5].val);
-
-      // console.log(projects);
-      // console.log(items);
     }
-      console.log(projectKeys);
       this.setState({
         selectedItems:[],
       });
-      // while (xml.getElementsByTagName('String')[i].value != undefined){
-      //
-      //   elements.push(<Card value={ xml.getElementsByTagName('String') } />);
-      //   i++;
-      // }
     }).catch((error) => {
       console.error(error);
     });
   }
   loadTags(){
-    // console.log("ENTERED LOAD TAGS");
-    console.log("project ID- " + this.state.projectId);
-    // console.log("Selected Value - " + this.state.selectedValue);
 
     const data = new FormData();
     data.append("user_name",  this.state.email);
     data.append("password",  this.state.password);
-    console.log(projectKeys[0]);
     let projID = this.state.projectId;
     if (projectKeys.length ==1){
       projID= projectKeys[0];
@@ -417,15 +362,12 @@ export default class UploadScreen extends React.Component {
     }).then((response) => response.text())
     .then((responseJson) => {
       // Showing response message coming from server after inserting records.
-      //console.log("RESPONSE JSON - " +responseJson);
+
       var xml = new XMLParser().parseFromString(responseJson);    // Assume xmlText contains the example XML
-      console.log(xml);
-      // console.log(xml.getElementsByTagName('String')[11].value);
       let i =4;
       this.setState({
         tags:[],
       });
-     //console.log(xml.getElementsByTagName('key'));
      let tagObjKeys= xml.getElementsByTagName('key');
       let tagObjValues= xml.getElementsByTagName('String');
       for(let i = 3; i < tagObjValues.length ; i++ ){
@@ -438,37 +380,21 @@ export default class UploadScreen extends React.Component {
         this.setState({
           tags: [...this.state.tags, keyvalitem]
         });
-
-        //console.log(tagObjKeys[i].value);
-
       }
-      console.log(tagObjValues);
-      console.log("TAGS - ");
-      console.log(this.state.tags);
-      // while (xml.getElementsByTagName('String')[i].value != undefined){
-      //
-      //   elements.push(<Card value={ xml.getElementsByTagName('String') } />);
-      //   i++;
-      // }
     }).catch((error) => {
       console.error(error);
     });
   }
   uploadImage(){
     this.setState({error: '', loading: true});
-    console.log("UPLOAD IMAGE - ProjectID - "+this.state.projectId);
-    console.log("UPLOAD IMAGE - Note - "+this.state.note);
-    //console.log("UPLOAD IMAGE - Image - "+this.state.image.uri);
-    console.log("UPLOAD IMAGE - Selected Tags - "+this.state.selectedItems);
+
     let tagString='';
     let count = this.state.images.length;
-    console.log("number of images to be uploaded - " +count);
     let imagesUploaded = 0;
     for (let tag of this.state.selectedItems) {
       tagString += tag+',';
     }
     tagString= tagString.substring(0, tagString.length - 1);
-    console.log("UPLOAD IMAGE - Selected Tags - " + tagString);
 
     const data = new FormData();
     data.append("user_name",  this.state.email);
@@ -490,7 +416,6 @@ export default class UploadScreen extends React.Component {
         } else {
           data.append("Note", notes[i]);
         }
-        console.log("UPLOAD IMAGE - Note - "+notes[i]);
       }
       data.append('image', {
         uri: this.state.images[i].uri,
@@ -507,23 +432,16 @@ export default class UploadScreen extends React.Component {
       }).then((response) => response.text())
       .then((responseJson) => {
         // Showing response message coming from server after inserting records.
-        console.log("RESPONSE JSON - " +responseJson);
         var xml = new XMLParser().parseFromString(responseJson);    // Assume xmlText contains the example XML
-        console.log(xml);
-        // console.log(xml.getElementsByTagName('String')[11].value);
         let i =4;
-       //console.log(xml.getElementsByTagName('key'));
        let tagObjKeys= xml.getElementsByTagName('key');
         let tagObjValues= xml.getElementsByTagName('String');
-        console.log(tagObjValues[0].value);
         if(tagObjValues[0].value == 'success'){
         }
         else{
           this.setState({error: "Error in image "+(i-3)+", " +tagObjValues[1].value+ "\n"});
-          //alert("Error in image "+i+", " +tagObjValues[1].value);
         }
         imagesUploaded++;
-        console.log('imagesUploaded - '+ imagesUploaded + "  Count - "+ count);
         if(imagesUploaded == count){
           if(this.state.error){
             alert(this.state.error);

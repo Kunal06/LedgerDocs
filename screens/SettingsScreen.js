@@ -10,7 +10,6 @@ export default class SettingsScreen extends React.Component {
     title: null,
   };
   constructor(props){
-    console.log("Settings SCREEN");
     super(props);
   }
 

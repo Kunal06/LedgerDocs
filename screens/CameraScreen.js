@@ -29,9 +29,7 @@ export default class CameraScreen extends React.Component {
     };
   }
   componentDidUpdate(previmage){
-    //console.log("length of images array - "+ this.state.images.length);
     if (this.state.previmage !== this.state.image) {
-        console.log("Enter UploadScreen - - - " + this.state.image);
         if(this.state.uploadReady){
           this.setState({ uploadReady: null,  })
           let imageTaken= [];
@@ -149,10 +147,8 @@ renderDetectionTypeText() {
          showsSelectedCount: true
 
        }).then(images => {
-         console.log("multiple images - " + images.length);
          for (var i = 0; i < images.length; i++) {
            let source = { uri: 'data:image/jpeg;base64,' + images[i].data };
-           console.log("CDU - " + source.uri);
            images[i]=source;
            this.setState({
              image: null,
@@ -196,7 +192,6 @@ renderDetectionTypeText() {
             }}
               useBase64
               onPictureTaken={(data) => {
-                //console.log("PICTURE TAKEN");
                 let source = { uri: 'data:image/jpeg;base64,' + data.croppedImage};
                   this.setState({ image: source,
                 initialImage: data.initialImage,
@@ -257,7 +252,6 @@ renderDetectionTypeText() {
                  itemWidth={50}
                  layout= 'stack'
                  onSnapToItem= {(index) =>{
-                   console.log("Activeslide - "+ index);
                    this.setState({ activeSlide: index });
                  }
                  }
@@ -293,7 +287,6 @@ renderDetectionTypeText() {
 });
   }
   completeScanning(){
-    console.log("length of images array - "+ this.state.images.length);
     this.props.navigation.navigate('Upload',{Image:this.state.image, Images: this.state.images})
   }
   clear(){

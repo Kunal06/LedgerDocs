@@ -11,11 +11,7 @@ var XMLParser = require('react-xml-parser');
 const serverURL = "https://migration.ledgersonline.com/index.php/Iphone/";
 import FormData from 'FormData';
 
-// PHP authenticate------
 export default class LoginScreen extends React.Component{
-  // static navigationOptions = {
-  //   header: <Header headText="Login"> </Header>,
-  // };
   static navigationOptions = {
     header: null
   };
@@ -23,18 +19,12 @@ export default class LoginScreen extends React.Component{
   loggedIn: 'false', secure: true, remember: false};
 
   constructor(props){
-    console.log("Login SCREEN");
     super(props);
     this._bootstrapAsync();
   }
 
   _bootstrapAsync = async () => {
     const currentUser = JSON.parse (await AsyncStorage.getItem('User'));
-     //console.log(currentUser.LoggedIn);
-     console.log(currentUser.user_name);
-     console.log(currentUser.password);
-     console.log(currentUser.LoggedIn);
-     console.log("REMEMBER  " +currentUser.remember);
      if(currentUser.remember){
     this.setState({
       email: currentUser.user_name,
@@ -50,8 +40,6 @@ authenticate(){
   const data = new FormData();
   data.append("user_name",  this.state.email);
   data.append("password",  this.state.password);
-  console.log(data.getParts()[0].string); //email
-  console.log(data.getParts()[1].string); //password
   fetch(serverURL+'authenticate', {
     method: 'POST',
     headers: {
@@ -62,12 +50,8 @@ authenticate(){
   }).then((response) => response.text())
   .then((responseXML) => {
     // Showing response message coming from server.
-    //console.log(responseXML);
     var xml = new XMLParser().parseFromString(responseXML);    // Assume xmlText contains the example XML
-    //console.log(xml);
-    //console.log(xml.getElementsByTagName('String')[0].value);
     if(xml.getElementsByTagName('String')[0].value == "success"){
-      //console.log("BEGIN LOGIN");
       this.onLoginSuccess();
     }
     else{
@@ -80,14 +64,10 @@ authenticate(){
 }
 
 _signInAsync = async () => {
-  //console.log(" SIGN IN SUCCESFUL");
-  // console.log("USERNAME - " + this.state.email);
-  // console.log("Password - " + this.state.password);
   this.setState({
     loggedIn: 'true',
   },
 );
-// console.log("Remember - " + this.state.remember);
 let user = {
   LoggedIn: this.state.loggedIn,
   user_name:  this.state.email,

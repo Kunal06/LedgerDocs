@@ -30,7 +30,6 @@ export default class LinksScreen extends React.Component {
   }
   _bootstrapAsync = async () => {
     const userToken = await AsyncStorage.getItem('UploadReady');
-    console.log(userToken);
 }
   static navigationOptions = {
     header: null,
@@ -50,7 +49,6 @@ state = {
       }
     };
     ImagePicker.launchCamera(options, (response) => {
-      console.log('Response = ', response);
 
       if (response.didCancel) {
         console.log('User cancelled photo picker');
@@ -66,7 +64,6 @@ state = {
 
         // You can also display the image using data:
         let source = { uri: 'data:image/jpeg;base64,' + response.data };
-        console.log("imagePicker image - "+ source.uri);
         let imagechosen=[];
         imagechosen.push(response);
         this.setState({
@@ -81,7 +78,6 @@ state = {
       let imagesUri=[];
       for (var i = 0; i < this.state.images.length; i++) {
         let source = { uri: 'data:image/jpeg;base64,' + this.state.images[i].data };
-        //console.log("CDU - " + source.uri);
         imagesUri.push(source);
       }
       this.props.navigation.navigate('Upload',{Image: this.state.imageSource, Images: imagesUri})
@@ -98,7 +94,6 @@ state = {
        showsSelectedCount: true
 
      }).then(images => {
-       console.log("multiple images - " + images.length);
        this.setState({
          image: null,
          images: images,

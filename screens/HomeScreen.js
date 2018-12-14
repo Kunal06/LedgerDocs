@@ -32,7 +32,6 @@ export default class HomeScreen extends React.Component {
   };
   state = { email: '', password: '', };
   constructor(props){
-    console.log("HOME SCREEN");
     super(props);
     this._bootstrapAsync();
     this.state = {
@@ -45,10 +44,6 @@ export default class HomeScreen extends React.Component {
   }
     _bootstrapAsync = async () => {
       const currentUser = JSON.parse (await AsyncStorage.getItem('User'));
-       //console.log(currentUser.LoggedIn);
-       console.log(currentUser.user_name);
-       console.log(currentUser.password);
-       console.log(currentUser.LoggedIn);
       this.setState({
         email: currentUser.user_name,
         password: currentUser.password,
@@ -125,8 +120,6 @@ export default class HomeScreen extends React.Component {
     );
   }
   change(d, i) {
-    console.log("d val - " + d);
-    console.log("i Value - " + i);
     this.setState({
       selectedValue: d,
       projectId: projectKeys[i],
@@ -136,8 +129,6 @@ export default class HomeScreen extends React.Component {
       this.loadUpdatesbyProject.bind(this)
 
 );
-console.log("project ID- " + this.state.projectId);
-console.log("Selected Value - " + this.state.selectedValue);
 }
 
   loadProjects(){
@@ -145,8 +136,6 @@ console.log("Selected Value - " + this.state.selectedValue);
     const data = new FormData();
     data.append("user_name",  this.state.email);
     data.append("password",  this.state.password);
-    console.log(this.state.email);
-    console.log(this.state.password);
     fetch(serverURL+'getProjects', {
       method: 'POST',
       headers: {
@@ -157,37 +146,23 @@ console.log("Selected Value - " + this.state.selectedValue);
     }).then((response) => response.text())
     .then((responseJson) => {
       // Showing response message coming from server after inserting records.
-      //console.log("RESPONSE JSON - " +responseJson);
       var xml = new XMLParser().parseFromString(responseJson);    // Assume xmlText contains the example XML
-    //  console.log(xml);
-      // console.log(xml.getElementsByTagName('String')[11].value);
       let i =4;
-     //console.log(xml.getElementsByTagName('key'));
      let projectsObjKey= xml.getElementsByTagName('key');
       let projectsObj= xml.getElementsByTagName('String');
       for(let i = 4; i < projectsObj.length ; i++ ){
         projectKeys.push(projectsObjKey[i].value);
         projectValues.push(projectsObj[i].value);
-      //  console.log(projectsObjKey[i].value);
         let keyvalitem = {
           id: projectsObjKey[i].value,
           val: projectsObj[i].value
         }
         projects.push(keyvalitem);
       }
-      //console.log(projects[5].val);
 
-      // console.log(projects);
-      // console.log(items);
-      console.log(projectValues);
       this.setState({
         selectedItems:[],
       });
-      // while (xml.getElementsByTagName('String')[i].value != undefined){
-      //
-      //   elements.push(<Card value={ xml.getElementsByTagName('String') } />);
-      //   i++;
-      // }
     }).catch((error) => {
       console.error(error);
     });
@@ -196,13 +171,9 @@ console.log("Selected Value - " + this.state.selectedValue);
     this.setState({
       updates: []
     });
-    console.log("ENTERED LOAD Updates by Project");
-    console.log("project ID- " + this.state.projectId);
     const data = new FormData();
     data.append("user_name",  this.state.email);
     data.append("password",  this.state.password);
-    console.log(this.state.projectId);
-    console.log(this.state.password);
     fetch(serverURL+'getUpdatesbyProject/'+ this.state.projectId, {
       method: 'POST',
       headers: {
@@ -213,9 +184,7 @@ console.log("Selected Value - " + this.state.selectedValue);
     }).then((response) => response.text())
     .then((responseXml) => {
       if(responseXml){
-       console.log(responseXml);
       var xml = new XMLParser().parseFromString(responseXml);
-      //console.log(xml);
      let objKeys= xml.getElementsByTagName('key');
       let objValues= xml.getElementsByTagName('String');
       for(let i = 4; i < objValues.length ; i++ ){
@@ -227,9 +196,7 @@ console.log("Selected Value - " + this.state.selectedValue);
         this.setState({
           updates: [...this.state.updates, keyvalitem]
         });
-      }
-     console.log(JSON.stringify(this.state.updates));
-   }
+      }   }
     }).catch((error) => {
       console.error(error);
     });
@@ -238,13 +205,9 @@ console.log("Selected Value - " + this.state.selectedValue);
     this.setState({
       updates: []
     });
-    console.log("ENTERED LOAD Updates");
-    console.log("project ID- " + this.state.projectId);
     const data = new FormData();
     data.append("user_name",  this.state.email);
     data.append("password",  this.state.password);
-    console.log(this.state.projectId);
-    console.log(this.state.password);
     fetch(serverURL+'getUpdates/', {
       method: 'POST',
       headers: {
@@ -254,9 +217,7 @@ console.log("Selected Value - " + this.state.selectedValue);
       body: data
     }).then((response) => response.text())
     .then((responseXml) => {
-      // console.log(responseXml);
       var xml = new XMLParser().parseFromString(responseXml);
-     // console.log(xml);
      let objKeys= xml.getElementsByTagName('key');
       let objValues= xml.getElementsByTagName('String');
       for(let i = 3; i < objValues.length ; i++ ){
@@ -269,7 +230,6 @@ console.log("Selected Value - " + this.state.selectedValue);
           updates: [...this.state.updates, keyvalitem]
         });
       }
-     console.log(JSON.stringify(this.state.updates));
     }).catch((error) => {
       console.error(error);
     });
