@@ -86,9 +86,9 @@ export default class UploadScreen extends React.Component {
     renderButton(){
       if(this.state.loading){
         return (
-          <CardSection>
+          <TouchableOpacity style={styles.pf_right} onPress={this.uploadImage.bind(this)} >
           <Spinner size= 'large' />
-          </CardSection>
+          </TouchableOpacity>
         );
       }
       return (
@@ -381,6 +381,7 @@ export default class UploadScreen extends React.Component {
     });
   }
   uploadImage(){
+    console.log("START LOADING");
     this.setState({error: '', loading: true});
 
     let tagString='';
@@ -459,9 +460,13 @@ export default class UploadScreen extends React.Component {
         console.error(error);
       });
     }
-    this.setState({
-      loading: false,
-    });
+    this.timeoutHandle = setTimeout(()=>{
+              console.log("STOP LOADING");
+              this.setState({
+                loading: false,
+              });
+         }, 1000);
+
 
   }
   clear(){
