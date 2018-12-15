@@ -381,7 +381,6 @@ export default class UploadScreen extends React.Component {
     });
   }
   uploadImage(){
-    console.log("START LOADING");
     this.setState({error: '', loading: true});
 
     let tagString='';
@@ -461,7 +460,6 @@ export default class UploadScreen extends React.Component {
       });
     }
     this.timeoutHandle = setTimeout(()=>{
-              console.log("STOP LOADING");
               this.setState({
                 loading: false,
               });
