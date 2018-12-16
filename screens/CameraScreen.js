@@ -196,7 +196,10 @@ renderDetectionTypeText() {
                   this.setState({ image: source,
                 initialImage: data.initialImage,
                 rectangleCoordinates: data.rectangleCoordinates,
-                uploadReady:true, lastDetectionType: 6, imageTaken:true
+                uploadReady:true,
+                lastDetectionType: 6,
+                imageTaken:true,
+                stableCounter: 0,
               });
                 }
               }
@@ -208,12 +211,16 @@ renderDetectionTypeText() {
               quality={0.8}
               contrast={1.2}
               onRectangleDetect={({ stableCounter, lastDetectionType }) => {
+                if(!this.state.imageTaken){
                 this.setState({ stableCounter, lastDetectionType })
+                }
+                else {
+                this.setState({ stableCounter :0, lastDetectionType:6 })
+                }
             }
             }
               detectionCountBeforeCapture={3}
               detectionRefreshRateInMS={80}
-              captureMultiple= {true}
               style={styles.scanner}
         />
         </View> :
