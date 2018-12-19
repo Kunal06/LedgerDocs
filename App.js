@@ -49,3 +49,18 @@ loggedIncontainer:
     },
 
 };
+
+// For info.plist development
+// <key>NSAppTransportSecurity</key>
+//   <dict>
+//     <key>NSAllowsArbitraryLoads</key>
+//     <true/>
+//     <key>NSExceptionDomains</key>
+//     <dict>
+//       <key>localhost</key>
+//       <dict>
+//         <key>NSExceptionAllowsInsecureHTTPLoads</key>
+//         <true/>
+//       </dict>
+//     </dict>
+//   </dict>

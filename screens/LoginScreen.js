@@ -7,8 +7,8 @@ import {Button,Card, CardSection,InputVertical, Spinner,Header} from '../compone
 var XMLParser = require('react-xml-parser');
 
 // PHP authenticate
-//const serverURL = "https://app.ledgerdocs.com/index.php/iphone/";
-const serverURL = "https://migration.ledgersonline.com/index.php/Iphone/";
+const serverURL = "https://app.ledgerdocs.com/index.php/iphone/";
+//const serverURL = "https://migration.ledgersonline.com/index.php/Iphone/";
 import FormData from 'FormData';
 
 export default class LoginScreen extends React.Component{

@@ -16,7 +16,8 @@ import { MonoText } from '../components/StyledText';
 import {Header} from '../components/common';
 import IOSPicker from 'react-native-ios-picker';
 
-const serverURL = "https://migration.ledgersonline.com/index.php/Iphone/";
+const serverURL = "https://app.ledgerdocs.com/index.php/iphone/";
+//const serverURL = "https://migration.ledgersonline.com/index.php/Iphone/";
 import FormData from 'FormData';
 var XMLParser = require('react-xml-parser');
 
@@ -105,7 +106,7 @@ export default class HomeScreen extends React.Component {
         <IOSPicker
         style= {{width: 200, height:25, borderRadius:5,
         borderWidth:1,
-        borderColor:'#007aff'}}
+        borderColor:'#365C80'}}
         selectedValue={this.state.selectedValue}
         mode='modal'
         data={projectValues}
@@ -291,7 +292,7 @@ const styles = {
   },
   textStyle: {
     alignSelf:'center',
-    color:'#007aff',
+    color:'#365C80',
     fontSize:16,
     fontWeight: '600',
     paddingTop:10,

@@ -7,7 +7,8 @@ import MultiSelect from 'react-native-multiple-select';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import InputScrollView from 'react-native-input-scroll-view';
 
-const serverURL = "https://migration.ledgersonline.com/index.php/Iphone/";
+const serverURL = "https://app.ledgerdocs.com/index.php/iphone/";
+//const serverURL = "https://migration.ledgersonline.com/index.php/Iphone/";
 import FormData from 'FormData';
 var XMLParser = require('react-xml-parser');
 import LinksScreen from './LinksScreen';
@@ -257,7 +258,8 @@ export default class UploadScreen extends React.Component {
     );
   }
   handleTextInput= note =>{
-    this.setState({note});
+    //new
+    this.setState({note: note,});
     if(!this.state.toggled){
       notes[this.state.activeSlide] = this.state.note;
   }
