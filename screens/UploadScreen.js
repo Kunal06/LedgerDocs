@@ -257,7 +257,8 @@ export default class UploadScreen extends React.Component {
 
     );
   }
-  handleTextInput= note =>{
+
+  handleTextInput= note => {
     //new
     this.setState({note: note,});
     if(!this.state.toggled){
