@@ -256,8 +256,9 @@ export default class UploadScreen extends React.Component {
 
     );
   }
-  handleTextInput= note =>{
-    this.setState({note});
+  handleTextInput= note => {
+    //new
+    this.setState({note: note,});
     if(!this.state.toggled){
       notes[this.state.activeSlide] = this.state.note;
   }
