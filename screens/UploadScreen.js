@@ -286,7 +286,7 @@ export default class UploadScreen extends React.Component {
     const data = new FormData();
     data.append("user_name",  this.state.email);
     data.append("password",  this.state.password);
-    fetch(serverURL+'getProjects', {
+    fetch(serverURL+'getProjects_React', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -350,7 +350,7 @@ export default class UploadScreen extends React.Component {
       projID= projectKeys[0];
     }
 
-    fetch(serverURL+'getTags/'+ projID, {
+    fetch(serverURL+'getTags_React/'+ projID, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -420,7 +420,7 @@ export default class UploadScreen extends React.Component {
         type: 'image/jpeg', // or photo.type
         name: 'test'+ new Date().toLocaleString() + '.jpeg'
       });
-      fetch(serverURL+'upload', {
+      fetch(serverURL+'upload_React', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

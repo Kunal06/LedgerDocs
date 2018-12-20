@@ -137,7 +137,7 @@ export default class HomeScreen extends React.Component {
     const data = new FormData();
     data.append("user_name",  this.state.email);
     data.append("password",  this.state.password);
-    fetch(serverURL+'getProjects', {
+    fetch(serverURL+'getProjects_React', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

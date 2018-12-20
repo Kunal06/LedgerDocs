@@ -40,7 +40,7 @@ authenticate(){
   const data = new FormData();
   data.append("user_name",  this.state.email);
   data.append("password",  this.state.password);
-  fetch(serverURL+'authenticate', {
+  fetch(serverURL+'authenticate_React', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
