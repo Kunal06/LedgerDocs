@@ -1,4 +1,3 @@
-//UPLOAD SCREEN
 import React, { Component } from 'react';
 import {SafeAreaView, Picker, Switch, KeyboardAvoidingView, ActivityIndicator,AsyncStorage,PixelRatio, Alert, TouchableOpacity,ScrollView, StyleSheet, Text, View, Image, TextInput, PickerItemIOS } from 'react-native';
 import { Header,Input, Button, Spinner, Card, CardSection, TextArea} from '../components/common';
